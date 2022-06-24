@@ -59,7 +59,7 @@ this command.
 
 ### Requirements.
 
-Python 3.7
+Python >=3.7
 
 ### easy_install
 
