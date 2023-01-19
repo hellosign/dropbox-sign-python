@@ -1,4 +1,4 @@
-# ```hellosign_sdk.SignatureRequestApi```
+# ```dropbox_sign.SignatureRequestApi```
 
 All URIs are relative to *https://api.hellosign.com/v3*
 
@@ -36,7 +36,7 @@ Creates BulkSendJob which sends up to 250 SignatureRequests in bulk based off of
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -48,7 +48,7 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.SignatureRequestApi(api_client)
+    signature_request_api = apis.SignatureRequestApi(api_client)
 
     signer_list_1_signer = models.SubSignatureRequestTemplateSigner(
         role="Client",
@@ -100,10 +100,10 @@ with ApiClient(configuration) as api_client:
     )
 
     try:
-        response = api.signature_request_bulk_create_embedded_with_template(data)
+        response = signature_request_api.signature_request_bulk_create_embedded_with_template(data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -152,7 +152,7 @@ Creates BulkSendJob which sends up to 250 SignatureRequests in bulk based off of
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -164,7 +164,7 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.SignatureRequestApi(api_client)
+    signature_request_api = apis.SignatureRequestApi(api_client)
 
     signer_list_1_signer = models.SubSignatureRequestTemplateSigner(
         role="Client",
@@ -215,10 +215,10 @@ with ApiClient(configuration) as api_client:
     )
 
     try:
-        response = api.signature_request_bulk_send_with_template(data)
+        response = signature_request_api.signature_request_bulk_send_with_template(data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -267,7 +267,7 @@ Cancels an incomplete signature request. This action is **not reversible**.  The
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -279,15 +279,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.SignatureRequestApi(api_client)
+    signature_request_api = apis.SignatureRequestApi(api_client)
 
     signature_request_id = "2f9781e1a8e2045224d808c153c2e1d3df6f8f2f"
 
     try:
-        response = api.signature_request_cancel(signature_request_id)
+        response = signature_request_api.signature_request_cancel(signature_request_id)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -336,7 +336,7 @@ Creates a new SignatureRequest with the submitted documents to be signed in an e
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -348,7 +348,7 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.SignatureRequestApi(api_client)
+    signature_request_api = apis.SignatureRequestApi(api_client)
 
     signer_1 = models.SubSignatureRequestSigner(
         email_address="jack@example.com",
@@ -376,17 +376,17 @@ with ApiClient(configuration) as api_client:
         subject="The NDA we talked about",
         message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.",
         signers=[signer_1, signer_2],
-        cc_email_addresses=["lawyer@hellosign.com", "lawyer@example.com"],
-        file=[open("example_signature_request.pdf", "rb")],
+        cc_email_addresses=["lawyer@dropboxsign.com", "lawyer@dropboxsign.com"],
+        files=[open("example_signature_request.pdf", "rb")],
         signing_options=signing_options,
         test_mode=True,
     )
 
     try:
-        response = api.signature_request_create_embedded(data)
+        response = signature_request_api.signature_request_create_embedded(data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -435,7 +435,7 @@ Creates a new SignatureRequest based on the given Template(s) to be signed in an
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -447,7 +447,7 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.SignatureRequestApi(api_client)
+    signature_request_api = apis.SignatureRequestApi(api_client)
 
     signer_1 = models.SubSignatureRequestTemplateSigner(
         role="Client",
@@ -474,10 +474,10 @@ with ApiClient(configuration) as api_client:
     )
 
     try:
-        response = api.signature_request_create_embedded_with_template(data)
+        response = signature_request_api.signature_request_create_embedded_with_template(data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -526,7 +526,7 @@ Obtain a copy of the current documents specified by the `signature_request_id` p
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -538,15 +538,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.SignatureRequestApi(api_client)
+    signature_request_api = apis.SignatureRequestApi(api_client)
 
     signature_request_id = "fa5c8a0b0f492d768749333ad6fcc214c111e967"
 
     try:
-        response = api.signature_request_files(signature_request_id, file_type="pdf")
+        response = signature_request_api.signature_request_files(signature_request_id, file_type="pdf")
         open('file_response.pdf', 'wb').write(response.read())
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -596,7 +596,7 @@ Obtain a copy of the current documents specified by the `signature_request_id` p
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -608,15 +608,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.SignatureRequestApi(api_client)
+    signature_request_api = apis.SignatureRequestApi(api_client)
 
     signature_request_id = "fa5c8a0b0f492d768749333ad6fcc214c111e967"
 
     try:
-        response = api.signature_request_files_as_data_uri(signature_request_id)
+        response = signature_request_api.signature_request_files_as_data_uri(signature_request_id)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -665,7 +665,7 @@ Obtain a copy of the current documents specified by the `signature_request_id` p
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -677,15 +677,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.SignatureRequestApi(api_client)
+    signature_request_api = apis.SignatureRequestApi(api_client)
 
     signature_request_id = "fa5c8a0b0f492d768749333ad6fcc214c111e967"
 
     try:
-        response = api.signature_request_files_as_file_url(signature_request_id)
+        response = signature_request_api.signature_request_files_as_file_url(signature_request_id)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -734,7 +734,7 @@ Returns the status of the SignatureRequest specified by the `signature_request_i
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -746,15 +746,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.SignatureRequestApi(api_client)
+    signature_request_api = apis.SignatureRequestApi(api_client)
 
     signature_request_id = "fa5c8a0b0f492d768749333ad6fcc214c111e967"
 
     try:
-        response = api.signature_request_get(signature_request_id)
+        response = signature_request_api.signature_request_get(signature_request_id)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -803,7 +803,7 @@ Returns a list of SignatureRequests that you can access. This includes Signature
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -815,19 +815,19 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.SignatureRequestApi(api_client)
+    signature_request_api = apis.SignatureRequestApi(api_client)
 
     account_id = None
     page = 1
 
     try:
-        response = api.signature_request_list(
+        response = signature_request_api.signature_request_list(
             account_id=account_id,
             page=page,
         )
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -879,7 +879,7 @@ Releases a held SignatureRequest that was claimed and prepared from an [Unclaime
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -891,15 +891,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.SignatureRequestApi(api_client)
+    signature_request_api = apis.SignatureRequestApi(api_client)
 
     signature_request_id = "2f9781e1a8e2045224d808c153c2e1d3df6f8f2f"
 
     try:
-        response = api.signature_request_release_hold(signature_request_id)
+        response = signature_request_api.signature_request_release_hold(signature_request_id)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -948,7 +948,7 @@ Sends an email to the signer reminding them to sign the signature request. You c
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -960,7 +960,7 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.SignatureRequestApi(api_client)
+    signature_request_api = apis.SignatureRequestApi(api_client)
 
     data = models.SignatureRequestRemindRequest(
         email_address="john@example.com",
@@ -969,10 +969,10 @@ with ApiClient(configuration) as api_client:
     signature_request_id = "2f9781e1a8e2045224d808c153c2e1d3df6f8f2f"
 
     try:
-        response = api.signature_request_remind(signature_request_id, data)
+        response = signature_request_api.signature_request_remind(signature_request_id, data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -1021,7 +1021,7 @@ Removes your access to a completed signature request. This action is **not rever
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -1033,15 +1033,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.SignatureRequestApi(api_client)
+    signature_request_api = apis.SignatureRequestApi(api_client)
 
     signature_request_id = "2f9781e1a8e2045224d808c153c2e1d3df6f8f2f"
 
     try:
-        response = api.signature_request_remove(signature_request_id)
+        response = signature_request_api.signature_request_remove(signature_request_id)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -1090,7 +1090,7 @@ Creates and sends a new SignatureRequest with the submitted documents. If `form_
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -1102,7 +1102,7 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.SignatureRequestApi(api_client)
+    signature_request_api = apis.SignatureRequestApi(api_client)
 
     signer_1 = models.SubSignatureRequestSigner(
         email_address="jack@example.com",
@@ -1134,10 +1134,10 @@ with ApiClient(configuration) as api_client:
         message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.",
         signers=[signer_1, signer_2],
         cc_email_addresses=[
-            "lawyer@hellosign.com",
-            "lawyer@example.com",
+            "lawyer@dropboxsign.com",
+            "lawyer@dropboxsign.com",
         ],
-        file=[open("example_signature_request.pdf", "rb")],
+        files=[open("example_signature_request.pdf", "rb")],
         metadata={
             "custom_id": 1234,
             "custom_text": "NDA #9",
@@ -1148,10 +1148,10 @@ with ApiClient(configuration) as api_client:
     )
 
     try:
-        response = api.signature_request_send(data)
+        response = signature_request_api.signature_request_send(data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -1200,7 +1200,7 @@ Creates and sends a new SignatureRequest based off of the Template(s) specified 
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -1212,7 +1212,7 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.SignatureRequestApi(api_client)
+    signature_request_api = apis.SignatureRequestApi(api_client)
 
     signer_1 = models.SubSignatureRequestSigner(
         role="Client",
@@ -1252,10 +1252,10 @@ with ApiClient(configuration) as api_client:
     )
 
     try:
-        response = api.signature_request_send_with_template(data)
+        response = signature_request_api.signature_request_send_with_template(data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -1304,7 +1304,7 @@ Updates the email address and/or the name for a given signer on a signature requ
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -1316,7 +1316,7 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.SignatureRequestApi(api_client)
+    signature_request_api = apis.SignatureRequestApi(api_client)
 
     data = models.SignatureRequestUpdateRequest(
         email_address = "john@example.com",
@@ -1326,10 +1326,10 @@ with ApiClient(configuration) as api_client:
     signature_request_id = "2f9781e1a8e2045224d808c153c2e1d3df6f8f2f"
 
     try:
-        response = api.signature_request_update(signature_request_id, data)
+        response = signature_request_api.signature_request_update(signature_request_id, data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 

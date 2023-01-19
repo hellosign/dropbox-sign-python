@@ -1,4 +1,4 @@
-# ```hellosign_sdk.BulkSendJobApi```
+# ```dropbox_sign.BulkSendJobApi```
 
 All URIs are relative to *https://api.hellosign.com/v3*
 
@@ -23,7 +23,7 @@ Returns the status of the BulkSendJob and its SignatureRequests specified by the
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -35,15 +35,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.BulkSendJobApi(api_client)
+    bulk_send_job_api = apis.BulkSendJobApi(api_client)
 
     bulk_send_job_id = "6e683bc0369ba3d5b6f43c2c22a8031dbf6bd174"
 
     try:
-        response = api.bulk_send_job_get(bulk_send_job_id)
+        response = bulk_send_job_api.bulk_send_job_get(bulk_send_job_id)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -92,7 +92,7 @@ Returns a list of BulkSendJob that you can access.
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -104,19 +104,19 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.BulkSendJobApi(api_client)
+    bulk_send_job_api = apis.BulkSendJobApi(api_client)
 
     page = 1
     page_size = 20
 
     try:
-        response = api.bulk_send_job_list(
+        response = bulk_send_job_api.bulk_send_job_list(
             page=page,
             page_size=page_size,
         )
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 

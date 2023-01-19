@@ -1,4 +1,4 @@
-# ```hellosign_sdk.EmbeddedApi```
+# ```dropbox_sign.EmbeddedApi```
 
 All URIs are relative to *https://api.hellosign.com/v3*
 
@@ -23,7 +23,7 @@ Retrieves an embedded object containing a template url that can be opened in an 
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -35,7 +35,7 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.EmbeddedApi(api_client)
+    embedded_api = apis.EmbeddedApi(api_client)
 
     data = models.EmbeddedEditUrlRequest(
         cc_roles=[""],
@@ -45,10 +45,10 @@ with ApiClient(configuration) as api_client:
     template_id = "5de8179668f2033afac48da1868d0093bf133266"
 
     try:
-        response = api.embedded_edit_url(template_id, data)
+        response = embedded_api.embedded_edit_url(template_id, data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -98,7 +98,7 @@ Retrieves an embedded object containing a signature url that can be opened in an
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -110,15 +110,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.EmbeddedApi(api_client)
+    embedded_api = apis.EmbeddedApi(api_client)
 
     signature_id = "50e3542f738adfa7ddd4cbd4c00d2a8ab6e4194b"
 
     try:
-        response = api.embedded_sign_url(signature_id)
+        response = embedded_api.embedded_sign_url(signature_id)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 

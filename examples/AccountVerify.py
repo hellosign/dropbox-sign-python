@@ -1,6 +1,6 @@
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -12,14 +12,14 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.AccountApi(api_client)
+    account_api = apis.AccountApi(api_client)
 
     data = models.AccountVerifyRequest(
-        email_address="some_user@hellosign.com",
+        email_address="some_user@dropboxsign.com",
     )
 
     try:
-        response = api.account_verify(data)
+        response = account_api.account_verify(data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)

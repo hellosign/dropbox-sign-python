@@ -1,4 +1,4 @@
-# ```hellosign_sdk.OAuthApi```
+# ```dropbox_sign.OAuthApi```
 
 All URIs are relative to *https://api.hellosign.com/v3*
 
@@ -21,7 +21,7 @@ Once you have retrieved the code from the user callback, you will need to exchan
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -43,10 +43,10 @@ with ApiClient(configuration) as api_client:
     )
 
     try:
-        response = api.oauth_token_generate(data)
+        response = oauth_api.oauth_token_generate(data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -92,7 +92,7 @@ Access tokens are only valid for a given period of time (typically one hour) for
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -111,10 +111,10 @@ with ApiClient(configuration) as api_client:
     )
 
     try:
-        response = api.oauth_token_refresh(data)
+        response = oauth_api.oauth_token_refresh(data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 

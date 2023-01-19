@@ -1,6 +1,6 @@
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -12,7 +12,7 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.ApiAppApi(api_client)
+    api_app_api = apis.ApiAppApi(api_client)
 
     white_labeling_options = models.SubWhiteLabelingOptions(
         primary_button_color="#00b3e6",
@@ -23,7 +23,7 @@ with ApiClient(configuration) as api_client:
 
     data = models.ApiAppUpdateRequest(
         name="New Name",
-        callback_url="http://example.com/hellosign",
+        callback_url="http://example.com/dropboxsign",
         white_labeling_options=white_labeling_options,
         custom_logo_file=custom_logo_file,
     )
@@ -31,7 +31,7 @@ with ApiClient(configuration) as api_client:
     client_id = "0dd3b823a682527788c4e40cb7b6f7e9"
 
     try:
-        response = api.api_app_update(client_id, data)
+        response = api_app_api.api_app_update(client_id, data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)

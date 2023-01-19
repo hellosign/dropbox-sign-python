@@ -1,6 +1,6 @@
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -12,16 +12,16 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TemplateApi(api_client)
+    template_api = apis.TemplateApi(api_client)
 
     data = models.TemplateUpdateFilesRequest(
-        file=[open("example_signature_request.pdf", "rb")],
+        files=[open("example_signature_request.pdf", "rb")],
     )
 
     template_id = "5de8179668f2033afac48da1868d0093bf133266"
 
     try:
-        response = api.template_update_files(template_id, data)
+        response = template_api.template_update_files(template_id, data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)

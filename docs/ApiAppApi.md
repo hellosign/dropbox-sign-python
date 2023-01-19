@@ -1,4 +1,4 @@
-# ```hellosign_sdk.ApiAppApi```
+# ```dropbox_sign.ApiAppApi```
 
 All URIs are relative to *https://api.hellosign.com/v3*
 
@@ -26,7 +26,7 @@ Creates a new API App.
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -38,7 +38,7 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.ApiAppApi(api_client)
+    api_app_api = apis.ApiAppApi(api_client)
 
     oauth = models.SubOAuth(
         callback_url="https://example.com/oauth",
@@ -61,10 +61,10 @@ with ApiClient(configuration) as api_client:
     )
 
     try:
-        response = api.api_app_create(data)
+        response = api_app_api.api_app_create(data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -113,7 +113,7 @@ Deletes an API App. Can only be invoked for apps you own.
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -125,15 +125,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.ApiAppApi(api_client)
+    api_app_api = apis.ApiAppApi(api_client)
 
     client_id = "0dd3b823a682527788c4e40cb7b6f7e9"
 
     try:
-        response = api.api_app_delete(client_id)
+        response = api_app_api.api_app_delete(client_id)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -182,7 +182,7 @@ Returns an object with information about an API App.
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -194,15 +194,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.ApiAppApi(api_client)
+    api_app_api = apis.ApiAppApi(api_client)
 
     client_id = "0dd3b823a682527788c4e40cb7b6f7e9"
 
     try:
-        response = api.api_app_get(client_id)
+        response = api_app_api.api_app_get(client_id)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -251,7 +251,7 @@ Returns a list of API Apps that are accessible by you. If you are on a team with
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -263,19 +263,19 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.ApiAppApi(api_client)
+    api_app_api = apis.ApiAppApi(api_client)
 
     page = 1
     page_size = 2
 
     try:
-        response = api.api_app_list(
+        response = api_app_api.api_app_list(
             page=page,
             page_size=page_size,
         )
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -325,7 +325,7 @@ Updates an existing API App. Can only be invoked for apps you own. Only the fiel
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -337,7 +337,7 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.ApiAppApi(api_client)
+    api_app_api = apis.ApiAppApi(api_client)
 
     white_labeling_options = models.SubWhiteLabelingOptions(
         primary_button_color="#00b3e6",
@@ -348,7 +348,7 @@ with ApiClient(configuration) as api_client:
 
     data = models.ApiAppUpdateRequest(
         name="New Name",
-        callback_url="http://example.com/hellosign",
+        callback_url="http://example.com/dropboxsign",
         white_labeling_options=white_labeling_options,
         custom_logo_file=custom_logo_file,
     )
@@ -356,10 +356,10 @@ with ApiClient(configuration) as api_client:
     client_id = "0dd3b823a682527788c4e40cb7b6f7e9"
 
     try:
-        response = api.api_app_update(client_id, data)
+        response = api_app_api.api_app_update(client_id, data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 

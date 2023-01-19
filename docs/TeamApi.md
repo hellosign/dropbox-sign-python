@@ -1,4 +1,4 @@
-# ```hellosign_sdk.TeamApi```
+# ```dropbox_sign.TeamApi```
 
 All URIs are relative to *https://api.hellosign.com/v3*
 
@@ -31,7 +31,7 @@ Invites a user (specified using the `email_address` parameter) to your Team. If 
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -43,17 +43,17 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TeamApi(api_client)
+    team_api = apis.TeamApi(api_client)
 
     data = models.TeamAddMemberRequest(
         email_address="george@example.com",
     )
 
     try:
-        response = api.team_add_member(data)
+        response = team_api.team_add_member(data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -103,7 +103,7 @@ Creates a new Team and makes you a member. You must not currently belong to a Te
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -115,17 +115,17 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TeamApi(api_client)
+    team_api = apis.TeamApi(api_client)
 
     data = models.TeamCreateRequest(
         name="New Team Name",
     )
 
     try:
-        response = api.team_create(data)
+        response = team_api.team_create(data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -174,7 +174,7 @@ Deletes your Team. Can only be invoked when you have a Team with only one member
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -186,13 +186,13 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TeamApi(api_client)
+    team_api = apis.TeamApi(api_client)
 
     try:
-        response = api.team_delete()
+        response = team_api.team_delete()
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -239,7 +239,7 @@ Returns information about your Team as well as a list of its members. If you do 
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -251,13 +251,13 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TeamApi(api_client)
+    team_api = apis.TeamApi(api_client)
 
     try:
-        response = api.team_get()
+        response = team_api.team_get()
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -304,7 +304,7 @@ Provides information about a team.
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -316,13 +316,13 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TeamApi(api_client)
+    team_api = apis.TeamApi(api_client)
 
     try:
-        response = api.team_info()
+        response = team_api.team_info()
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -371,7 +371,7 @@ Provides a list of team invites (and their roles).
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -383,15 +383,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TeamApi(api_client)
+    team_api = apis.TeamApi(api_client)
 
-    email_address = "user@hellosign.com"
+    email_address = "user@dropboxsign.com"
 
     try:
-        response = api.team_invites(email_address)
+        response = team_api.team_invites(email_address)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -440,7 +440,7 @@ Provides a paginated list of members (and their roles) that belong to a given te
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -452,15 +452,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TeamApi(api_client)
+    team_api = apis.TeamApi(api_client)
 
     team_id = "4fea99bfcf2b26bfccf6cea3e127fb8bb74d8d9c"
 
     try:
-        response = api.team_members(team_id)
+        response = team_api.team_members(team_id)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -511,7 +511,7 @@ Removes the provided user Account from your Team. If the Account had an outstand
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -523,18 +523,18 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TeamApi(api_client)
+    team_api = apis.TeamApi(api_client)
 
     data = models.TeamRemoveMemberRequest(
-        email_address="teammate@hellosign.com",
-        new_owner_email_address="new_teammate@hellosign.com",
+        email_address="teammate@dropboxsign.com",
+        new_owner_email_address="new_teammate@dropboxsign.com",
     )
 
     try:
-        response = api.team_remove_member(data)
+        response = team_api.team_remove_member(data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -583,7 +583,7 @@ Provides a paginated list of sub teams that belong to a given team.
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -595,15 +595,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TeamApi(api_client)
+    team_api = apis.TeamApi(api_client)
 
     team_id = "4fea99bfcf2b26bfccf6cea3e127fb8bb74d8d9c"
 
     try:
-        response = api.team_sub_teams(team_id)
+        response = team_api.team_sub_teams(team_id)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -654,7 +654,7 @@ Updates the name of your Team.
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -666,17 +666,17 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TeamApi(api_client)
+    team_api = apis.TeamApi(api_client)
 
     data = models.TeamUpdateRequest(
         name="New Team Name",
     )
 
     try:
-        response = api.team_update(data)
+        response = team_api.team_update(data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 

@@ -1,6 +1,6 @@
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -12,16 +12,16 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.ApiAppApi(api_client)
+    api_app_api = apis.ApiAppApi(api_client)
 
     page = 1
     page_size = 2
 
     try:
-        response = api.api_app_list(
+        response = api_app_api.api_app_list(
             page=page,
             page_size=page_size,
         )
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)

@@ -1,4 +1,4 @@
-# ```hellosign_sdk.AccountApi```
+# ```dropbox_sign.AccountApi```
 
 All URIs are relative to *https://api.hellosign.com/v3*
 
@@ -25,7 +25,7 @@ Creates a new Dropbox Sign Account that is associated with the specified `email_
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -37,17 +37,17 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.AccountApi(api_client)
+    account_api = apis.AccountApi(api_client)
 
     data = models.AccountCreateRequest(
-        email_address="newuser@hellosign.com",
+        email_address="newuser@dropboxsign.com",
     )
 
     try:
-        response = api.account_create(data)
+        response = account_api.account_create(data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -96,7 +96,7 @@ Returns the properties and settings of your Account.
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -108,13 +108,13 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.AccountApi(api_client)
+    account_api = apis.AccountApi(api_client)
 
     try:
-        response = api.account_get(email_address="jack@example.com")
+        response = account_api.account_get(email_address="jack@example.com")
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -164,7 +164,7 @@ Updates the properties and settings of your Account. Currently only allows for u
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -176,17 +176,17 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.AccountApi(api_client)
+    account_api = apis.AccountApi(api_client)
 
     data = models.AccountUpdateRequest(
         callback_url="https://www.example.com/callback",
     )
 
     try:
-        response = api.account_update(data)
+        response = account_api.account_update(data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -235,7 +235,7 @@ Verifies whether an Dropbox Sign Account exists for the given email address.
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -247,17 +247,17 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.AccountApi(api_client)
+    account_api = apis.AccountApi(api_client)
 
     data = models.AccountVerifyRequest(
-        email_address="some_user@hellosign.com",
+        email_address="some_user@dropboxsign.com",
     )
 
     try:
-        response = api.account_verify(data)
+        response = account_api.account_verify(data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 

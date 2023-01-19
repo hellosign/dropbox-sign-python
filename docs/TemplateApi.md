@@ -1,4 +1,4 @@
-# ```hellosign_sdk.TemplateApi```
+# ```dropbox_sign.TemplateApi```
 
 All URIs are relative to *https://api.hellosign.com/v3*
 
@@ -31,7 +31,7 @@ Gives the specified Account access to the specified Template. The specified Acco
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -43,19 +43,19 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TemplateApi(api_client)
+    template_api = apis.TemplateApi(api_client)
 
     data = models.TemplateAddUserRequest(
-        email_address="george@hellosign.com",
+        email_address="george@dropboxsign.com",
     )
 
     template_id = "f57db65d3f933b5316d398057a36176831451a35"
 
     try:
-        response = api.template_add_user(template_id, data)
+        response = template_api.template_add_user(template_id, data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -105,7 +105,7 @@ The first step in an embedded template workflow. Creates a draft template that c
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -117,7 +117,7 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TemplateApi(api_client)
+    template_api = apis.TemplateApi(api_client)
 
     role_1 = models.SubTemplateRole(
         name="Client",
@@ -145,7 +145,7 @@ with ApiClient(configuration) as api_client:
 
     data = models.TemplateCreateEmbeddedDraftRequest(
         client_id="37dee8d8440c66d54cfa05d92c160882",
-        file=[open("example_signature_request.pdf", "rb")],
+        files=[open("example_signature_request.pdf", "rb")],
         title="Test Template",
         subject="Please sign this document",
         message="For your approval",
@@ -157,10 +157,10 @@ with ApiClient(configuration) as api_client:
     )
 
     try:
-        response = api.template_create_embedded_draft(data)
+        response = template_api.template_create_embedded_draft(data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -209,7 +209,7 @@ Completely deletes the template specified from the account.
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -221,15 +221,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TemplateApi(api_client)
+    template_api = apis.TemplateApi(api_client)
 
     template_id = "5de8179668f2033afac48da1868d0093bf133266"
 
     try:
-        response = api.template_delete(template_id)
+        response = template_api.template_delete(template_id)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -278,7 +278,7 @@ Obtain a copy of the current documents specified by the `template_id` parameter.
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -290,15 +290,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TemplateApi(api_client)
+    template_api = apis.TemplateApi(api_client)
 
     template_id = "5de8179668f2033afac48da1868d0093bf133266"
 
     try:
-        response = api.template_files(template_id, file_type="pdf")
+        response = template_api.template_files(template_id, file_type="pdf")
         open('file_response.pdf', 'wb').write(response.read())
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -348,7 +348,7 @@ Obtain a copy of the current documents specified by the `template_id` parameter.
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -360,15 +360,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TemplateApi(api_client)
+    template_api = apis.TemplateApi(api_client)
 
     template_id = "5de8179668f2033afac48da1868d0093bf133266"
 
     try:
-        response = api.template_files_as_data_uri(template_id)
+        response = template_api.template_files_as_data_uri(template_id)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -417,7 +417,7 @@ Obtain a copy of the current documents specified by the `template_id` parameter.
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -429,15 +429,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TemplateApi(api_client)
+    template_api = apis.TemplateApi(api_client)
 
     template_id = "5de8179668f2033afac48da1868d0093bf133266"
 
     try:
-        response = api.template_files_as_file_url(template_id)
+        response = template_api.template_files_as_file_url(template_id)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -486,7 +486,7 @@ Returns the Template specified by the `template_id` parameter.
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -498,15 +498,15 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TemplateApi(api_client)
+    template_api = apis.TemplateApi(api_client)
 
     template_id = "f57db65d3f933b5316d398057a36176831451a35"
 
     try:
-        response = api.template_get(template_id)
+        response = template_api.template_get(template_id)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -555,7 +555,7 @@ Returns a list of the Templates that are accessible by you.  Take a look at our 
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis
 
 configuration = Configuration(
@@ -567,17 +567,17 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TemplateApi(api_client)
+    template_api = apis.TemplateApi(api_client)
 
     account_id = "f57db65d3f933b5316d398057a36176831451a35"
 
     try:
-        response = api.template_list(
+        response = template_api.template_list(
             account_id=account_id,
         )
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -629,7 +629,7 @@ Removes the specified Account's access to the specified Template.
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -641,19 +641,19 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TemplateApi(api_client)
+    template_api = apis.TemplateApi(api_client)
 
     data = models.TemplateRemoveUserRequest(
-        email_address="george@hellosign.com",
+        email_address="george@dropboxsign.com",
     )
 
     template_id = "21f920ec2b7f4b6bb64d3ed79f26303843046536"
 
     try:
-        response = api.template_remove_user(template_id, data)
+        response = template_api.template_remove_user(template_id, data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
@@ -703,7 +703,7 @@ Overlays a new file with the overlay of an existing template. The new file(s) mu
 ```python
 from pprint import pprint
 
-from hellosign_sdk import \
+from dropbox_sign import \
     ApiClient, ApiException, Configuration, apis, models
 
 configuration = Configuration(
@@ -715,19 +715,19 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    api = apis.TemplateApi(api_client)
+    template_api = apis.TemplateApi(api_client)
 
     data = models.TemplateUpdateFilesRequest(
-        file=[open("example_signature_request.pdf", "rb")],
+        files=[open("example_signature_request.pdf", "rb")],
     )
 
     template_id = "5de8179668f2033afac48da1868d0093bf133266"
 
     try:
-        response = api.template_update_files(template_id, data)
+        response = template_api.template_update_files(template_id, data)
         pprint(response)
     except ApiException as e:
-        print("Exception when calling HelloSign API: %s\n" % e)
+        print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
 
