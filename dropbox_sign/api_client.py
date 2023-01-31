@@ -77,7 +77,7 @@ class ApiClient(object):
             self.default_headers[header_name] = header_value
         self.cookie = cookie
         # Set default User-Agent.
-        self.user_agent = 'OpenAPI-Generator/1.0.0-beta2301.post2/python'
+        self.user_agent = 'OpenAPI-Generator/1.0.0/python'
 
     def __enter__(self):
         return self
@@ -318,6 +318,8 @@ class ApiClient(object):
         # fetch data from response object
         try:
             received_data = json.loads(response.data)
+        except TypeError:
+            received_data = response.data
         except ValueError:
             received_data = response.data
 
@@ -866,6 +868,14 @@ class Endpoint(object):
         self.__validate_inputs(kwargs)
 
         params = self.__gather_params(kwargs)
+
+        # Remove None values from query parameters
+        query_to_keep = []
+        for key, value in params['query']:
+            if value is not None:
+                query_to_keep = query_to_keep + [(key, value)]
+
+        params['query'] = query_to_keep
 
         accept_headers_list = self.headers_map['accept']
         if accept_headers_list:
