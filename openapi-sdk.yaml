@@ -6821,7 +6821,7 @@ components:
             $ref: '#/components/schemas/SubFormFieldRule'
         form_fields_per_document:
           description: |-
-            The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: <a href="/docs/openapi/form-fields-per-document" target="_blank">Using Form Fields per Document</a>.)
+            The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
 
             **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.
 
@@ -6882,7 +6882,6 @@ components:
             ⚠️ **Note** ⚠️: Keep your signer's information safe by ensuring that the _signer on your signature request is the intended party_ before using this feature.
           type: boolean
           default: false
-          x-beta: closed
         expires_at:
           description: |-
             When the signature request will expire. Unsigned signatures will be moved to the expired status, and no longer signable. See [Signature Request Expiration Date](https://developers.hellosign.com/docs/signature-request/expiration/) for details.
@@ -6975,7 +6974,6 @@ components:
             ⚠️ **Note** ⚠️: Keep your signer's information safe by ensuring that the _signer on your signature request is the intended party_ before using this feature.
           type: boolean
           default: false
-          x-beta: closed
       type: object
     SignatureRequestRemindRequest:
       required:
@@ -7073,7 +7071,7 @@ components:
             $ref: '#/components/schemas/SubFormFieldRule'
         form_fields_per_document:
           description: |-
-            The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: <a href="/docs/openapi/form-fields-per-document" target="_blank">Using Form Fields per Document</a>.)
+            The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
 
             **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.
 
@@ -7531,7 +7529,7 @@ components:
       type: object
     SubFormFieldsPerDocumentBase:
       description: |-
-        The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: <a href="/docs/openapi/form-fields-per-document" target="_blank">Using Form Fields per Document</a>.)
+        The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
 
         **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.
 
@@ -8060,7 +8058,7 @@ components:
             $ref: '#/components/schemas/SubFormFieldRule'
         form_fields_per_document:
           description: |-
-            The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: <a href="/docs/openapi/form-fields-per-document" target="_blank">Using Form Fields per Document</a>.)
+            The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
 
             **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.
 
@@ -8242,7 +8240,7 @@ components:
             $ref: '#/components/schemas/SubFormFieldRule'
         form_fields_per_document:
           description: |-
-            The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: <a href="/docs/openapi/form-fields-per-document" target="_blank">Using Form Fields per Document</a>.)
+            The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
 
             **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.
 
@@ -8406,7 +8404,7 @@ components:
             $ref: '#/components/schemas/SubFormFieldRule'
         form_fields_per_document:
           description: |-
-            The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: <a href="/docs/openapi/form-fields-per-document" target="_blank">Using Form Fields per Document</a>.)
+            The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
 
             **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.
 
@@ -8509,7 +8507,6 @@ components:
             ⚠️ **Note** ⚠️: Keep your signer's information safe by ensuring that the _signer on your signature request is the intended party_ before using this feature.
           type: boolean
           default: false
-          x-beta: closed
         expires_at:
           description: |-
             When the signature request will expire. Unsigned signatures will be moved to the expired status, and no longer signable. See [Signature Request Expiration Date](https://developers.hellosign.com/docs/signature-request/expiration/) for details.
@@ -8665,7 +8662,6 @@ components:
             ⚠️ **Note** ⚠️: Keep your signer's information safe by ensuring that the _signer on your signature request is the intended party_ before using this feature.
           type: boolean
           default: false
-          x-beta: closed
       type: object
     UnclaimedDraftEditAndResendRequest:
       required:

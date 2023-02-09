@@ -4,7 +4,7 @@ additionalProperties:
   generatorLanguageVersion: ">=3.7"
   packageName: dropbox_sign
   projectName: dropbox-sign
-  packageVersion: 1.0.0
+  packageVersion: 1.0.1
   sortModelPropertiesByRequiredFlag: true
   legacyDiscriminatorBehavior: true
   packageAuthor: Dropbox Sign API Team
@@ -14,6 +14,9 @@ files:
   event_callback_helper.mustache:
     templateType: SupportingFiles
     destinationFilename: dropbox_sign/event_callback_helper.py
+  VERSION.mustache:
+    templateType: SupportingFiles
+    destinationFilename: VERSION
 globalProperties:
   apiTests: false
   modelTests: false
