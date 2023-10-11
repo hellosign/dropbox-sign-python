@@ -1487,11 +1487,11 @@ paths:
           label: cURL
           source:
             $ref: examples/OauthTokenGenerate.sh
-      x-hideTryItPanel: true
       x-meta:
         seo:
           title: 'Generate OAuth Token | Documentation | Dropbox Sign for Developers'
           description: 'The RESTful Dropbox Sign API easily allows you to build custom eSign integrations. To find out how to generate a new OAuth token with the API, click here.'
+      x-hideTryItPanel: true
   '/oauth/token?refresh':
     post:
       tags:
@@ -1570,11 +1570,11 @@ paths:
           label: cURL
           source:
             $ref: examples/OauthTokenRefresh.sh
-      x-hideTryItPanel: true
       x-meta:
         seo:
           title: 'OAuth Token Refresh | Documentation | Dropbox Sign for Developers'
           description: 'The RESTful Dropbox Sign API easily allows you to build custom eSign integrations. To find out how to refresh your OAuth token with the API, click here.'
+      x-hideTryItPanel: true
   /report/create:
     post:
       tags:
@@ -2304,8 +2304,8 @@ paths:
           api_key: []
         -
           oauth2:
-            - signature_request_access
             - request_signature
+            - signature_request_access
       x-codeSamples:
         -
           lang: PHP
@@ -2417,8 +2417,8 @@ paths:
           api_key: []
         -
           oauth2:
-            - signature_request_access
             - request_signature
+            - signature_request_access
       x-codeSamples:
         -
           lang: PHP
@@ -2530,8 +2530,8 @@ paths:
           api_key: []
         -
           oauth2:
-            - signature_request_access
             - request_signature
+            - signature_request_access
       x-codeSamples:
         -
           lang: PHP
@@ -3364,6 +3364,8 @@ paths:
       description: |-
         Updates the email address and/or the name for a given signer on a signature request. You can listen for the `signature_request_email_bounce` event on your app or account to detect bounced emails, and respond with this method.
 
+        Updating the email address of a signer will generate a new `signature_id` value.
+
         **NOTE**: This action cannot be performed on a signature request with an appended signature page.
       operationId: signatureRequestUpdate
       parameters:
@@ -3487,7 +3489,6 @@ paths:
           schema:
             type: string
           example: 4fea99bfcf2b26bfccf6cea3e127fb8bb74d8d9c
-          x-beta: closed
       requestBody:
         required: true
         content:
@@ -4067,7 +4068,6 @@ paths:
           label: cURL
           source:
             $ref: examples/TeamInfo.sh
-      x-beta: closed
       x-meta:
         seo:
           title: 'Get Team Info | Dropbox Sign for Developers'
@@ -4290,7 +4290,6 @@ paths:
           label: cURL
           source:
             $ref: examples/TeamMembers.sh
-      x-beta: closed
       x-meta:
         seo:
           title: 'List Team Members | Dropbox Sign for Developers'
@@ -4517,7 +4516,6 @@ paths:
           label: cURL
           source:
             $ref: examples/TeamSubTeams.sh
-      x-beta: closed
       x-meta:
         seo:
           title: 'List Sub Teams | Dropbox Sign for Developers'
@@ -4634,6 +4632,120 @@ paths:
         seo:
           title: 'Add User to Template | REST API | Dropbox Sign for Developers'
           description: 'The RESTful Dropbox Sign API easily allows you to build custom eSign integrations. To find out how to give an Account access to a Template, click here.'
+  /template/create:
+    post:
+      tags:
+        - Template
+      summary: 'Create  Template'
+      description: 'Creates a template that can then be used.'
+      operationId: templateCreate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemplateCreateRequest'
+            examples:
+              default_example:
+                $ref: '#/components/examples/TemplateCreateRequestDefaultExample'
+              form_fields_per_document:
+                $ref: '#/components/examples/TemplateCreateRequestFormFieldsPerDocumentExample'
+              form_field_groups:
+                $ref: '#/components/examples/TemplateCreateRequestFormFieldGroupsExample'
+              form_field_rules:
+                $ref: '#/components/examples/TemplateCreateRequestFormFieldRulesExample'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TemplateCreateRequest'
+      responses:
+        200:
+          description: 'successful operation'
+          headers:
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/X-RateLimit-Limit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/X-RateLimit-Remaining'
+            X-Ratelimit-Reset:
+              $ref: '#/components/headers/X-Ratelimit-Reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateCreateResponse'
+              examples:
+                default_example:
+                  $ref: '#/components/examples/TemplateCreateResponseExample'
+        4XX:
+          description: failed_operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                400_example:
+                  $ref: '#/components/examples/Error400ResponseExample'
+                401_example:
+                  $ref: '#/components/examples/Error401ResponseExample'
+                402_example:
+                  $ref: '#/components/examples/Error402ResponseExample'
+                403_example:
+                  $ref: '#/components/examples/Error403ResponseExample'
+                404_example:
+                  $ref: '#/components/examples/Error404ResponseExample'
+                409_example:
+                  $ref: '#/components/examples/Error409ResponseExample'
+                4XX_example:
+                  $ref: '#/components/examples/Error4XXResponseExample'
+      security:
+        -
+          api_key: []
+        -
+          oauth2:
+            - template_access
+      x-codeSamples:
+        -
+          lang: PHP
+          label: PHP
+          source:
+            $ref: examples/TemplateCreate.php
+        -
+          lang: 'C#'
+          label: 'C#'
+          source:
+            $ref: examples/TemplateCreate.cs
+        -
+          lang: JavaScript
+          label: JavaScript
+          source:
+            $ref: examples/TemplateCreate.js
+        -
+          lang: TypeScript
+          label: TypeScript
+          source:
+            $ref: examples/TemplateCreate.ts
+        -
+          lang: Java
+          label: Java
+          source:
+            $ref: examples/TemplateCreate.java
+        -
+          lang: Ruby
+          label: Ruby
+          source:
+            $ref: examples/TemplateCreate.rb
+        -
+          lang: Python
+          label: Python
+          source:
+            $ref: examples/TemplateCreate.py
+        -
+          lang: cURL
+          label: cURL
+          source:
+            $ref: examples/TemplateCreate.sh
+      x-meta:
+        seo:
+          title: 'Create Template | Dropbox Sign for Developers'
+          description: 'The RESTful Dropbox Sign API easily allows you to build custom eSign integrations. To find out how to create an template, click here.'
   /template/create_embedded_draft:
     post:
       tags:
@@ -6283,236 +6395,6 @@ components:
           type: boolean
           default: false
       type: object
-    SubFormFieldsPerDocumentTypeEnum:
-      type: string
-      enum:
-        - checkbox
-        - checkbox-merge
-        - date_signed
-        - dropdown
-        - hyperlink
-        - initials
-        - signature
-        - radio
-        - text
-        - text-merge
-    SubFormFieldsPerDocumentText:
-      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
-        -
-          required:
-            - type
-            - options
-          properties:
-            type:
-              description: 'A text input field. Use the `SubFormFieldsPerDocumentText` class.'
-              type: string
-              default: text
-            placeholder:
-              description: 'Placeholder value for text field.'
-              type: string
-            auto_fill_type:
-              description: 'Auto fill type for populating fields automatically. Check out the list of [auto fill types](/api/reference/constants/#auto-fill-types) to learn more about the possible values.'
-              type: string
-            link_id:
-              description: 'Link two or more text fields. Enter data into one linked text field, which automatically fill all other linked text fields.'
-              type: string
-            masked:
-              description: 'Masks entered data. For more information see [Masking sensitive information](https://faq.hellosign.com/hc/en-us/articles/360040742811-Masking-sensitive-information). `true` for masking the data in a text field, otherwise `false`.'
-              type: boolean
-            validation_type:
-              description: |-
-                Each text field may contain a `validation_type` parameter. Check out the list of [validation types](https://faq.hellosign.com/hc/en-us/articles/217115577) to learn more about the possible values.
-
-                **NOTE**: When using `custom_regex` you are required to pass a second parameter `validation_custom_regex` and you can optionally provide `validation_custom_regex_format_label` for the error message the user will see in case of an invalid value.
-              type: string
-              enum:
-                - numbers_only
-                - letters_only
-                - phone_number
-                - bank_routing_number
-                - bank_account_number
-                - email_address
-                - zip_code
-                - social_security_number
-                - employer_identification_number
-                - custom_regex
-            validation_custom_regex:
-              type: string
-            validation_custom_regex_format_label:
-              type: string
-          type: object
-    SubFormFieldsPerDocumentDropdown:
-      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
-        -
-          required:
-            - type
-            - options
-          properties:
-            type:
-              description: 'An input field for dropdowns. Use the `SubFormFieldsPerDocumentDropdown` class.'
-              type: string
-              default: dropdown
-            options:
-              description: 'Array of string values representing dropdown values.'
-              type: array
-              items:
-                type: string
-              minItems: 1
-            content:
-              description: 'Selected value in `options` array. Value must exist in array.'
-              type: string
-          type: object
-    SubFormFieldsPerDocumentHyperlink:
-      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
-        -
-          required:
-            - type
-            - content
-            - content_url
-          properties:
-            type:
-              description: 'A hyperlink field. Use the `SubFormFieldsPerDocumentHyperlink` class.'
-              type: string
-              default: hyperlink
-            content:
-              description: 'Link Text.'
-              type: string
-            content_url:
-              description: 'Link URL.'
-              type: string
-          type: object
-    SubFormFieldsPerDocumentCheckbox:
-      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
-        -
-          required:
-            - type
-            - is_checked
-          properties:
-            type:
-              description: 'A yes/no checkbox. Use the `SubFormFieldsPerDocumentCheckbox` class.'
-              type: string
-              default: checkbox
-            group:
-              description: 'String referencing group defined in `form_field_groups` parameter.'
-              type: string
-            is_checked:
-              description: '`true` for checking the checkbox field by default, otherwise `false`.'
-              type: boolean
-          type: object
-    SubFormFieldsPerDocumentRadio:
-      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
-        -
-          required:
-            - type
-            - group
-            - is_checked
-          properties:
-            type:
-              description: 'An input field for radios. Use the `SubFormFieldsPerDocumentRadio` class.'
-              type: string
-              default: radio
-            group:
-              description: 'String referencing group defined in `form_field_groups` parameter.'
-              type: string
-            is_checked:
-              description: '`true` for checking the radio field by default, otherwise `false`. Only one radio field per group can be `true`.'
-              type: boolean
-          type: object
-    SubFormFieldsPerDocumentSignature:
-      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
-        -
-          required:
-            - type
-          properties:
-            type:
-              description: 'A signature input field. Use the `SubFormFieldsPerDocumentSignature` class.'
-              type: string
-              default: signature
-          type: object
-    SubFormFieldsPerDocumentDateSigned:
-      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
-        -
-          required:
-            - type
-          properties:
-            type:
-              description: 'A date. Use the `SubFormFieldsPerDocumentDateSigned` class.'
-              type: string
-              default: date_signed
-          type: object
-    SubFormFieldsPerDocumentInitials:
-      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
-        -
-          required:
-            - type
-          properties:
-            type:
-              description: 'An input field for initials. Use the `SubFormFieldsPerDocumentInitials` class.'
-              type: string
-              default: initials
-          type: object
-    SubFormFieldsPerDocumentTextMerge:
-      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
-        -
-          required:
-            - type
-          properties:
-            type:
-              description: 'A text field that has default text set using pre-filled data. Use the `SubFormFieldsPerDocumentTextMerge` class.'
-              type: string
-              default: text-merge
-          type: object
-    SubFormFieldsPerDocumentCheckboxMerge:
-      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
-        -
-          required:
-            - type
-          properties:
-            type:
-              description: 'A checkbox field that has default value set using pre-filled data. Use the `SubFormFieldsPerDocumentCheckboxMerge` class.'
-              type: string
-              default: checkbox-merge
-          type: object
     OAuthTokenGenerateRequest:
       required:
         - client_id
@@ -6835,7 +6717,7 @@ components:
             $ref: '#/components/schemas/SubFormFieldRule'
         form_fields_per_document:
           description: |-
-            The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
+            The fields that should appear on the document, expressed as an array of objects. (For more details you can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
 
             **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.
 
@@ -6900,7 +6782,6 @@ components:
           description: 'When the signature request will expire. Unsigned signatures will be moved to the expired status, and no longer signable. See [Signature Request Expiration Date](https://developers.hellosign.com/docs/signature-request/expiration/) for details.'
           type: integer
           nullable: true
-          x-beta: closed
       type: object
     SignatureRequestCreateEmbeddedWithTemplateRequest:
       required:
@@ -7082,7 +6963,7 @@ components:
             $ref: '#/components/schemas/SubFormFieldRule'
         form_fields_per_document:
           description: |-
-            The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
+            The fields that should appear on the document, expressed as an array of objects. (For more details you can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
 
             **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.
 
@@ -7113,6 +6994,16 @@ components:
             which requires a face-to-face call to verify the signer's identity.<br>
             **Note**: QES is only available on the Premium API plan as an add-on purchase.
             Cannot be used in `test_mode`. Only works on requests with one signer.
+          type: boolean
+          default: false
+          deprecated: true
+          x-hideOn: doc
+        is_eid:
+          description: |-
+            Send with a value of `true` if you wish to enable
+            [electronic identification (eID)](https://www.hellosign.com/features/electronic-id),
+            which requires the signer to verify their identity with an eID provider to sign a document.<br>
+            **Note**: eID is only available on the Premium API plan. Cannot be used in `test_mode`. Only works on requests with one signer.
           type: boolean
           default: false
         message:
@@ -7152,7 +7043,6 @@ components:
           description: 'When the signature request will expire. Unsigned signatures will be moved to the expired status, and no longer signable. See [Signature Request Expiration Date](https://developers.hellosign.com/docs/signature-request/expiration/) for details.'
           type: integer
           nullable: true
-          x-beta: closed
       type: object
     SignatureRequestSendWithTemplateRequest:
       description: ''
@@ -7208,6 +7098,16 @@ components:
             Cannot be used in `test_mode`. Only works on requests with one signer.
           type: boolean
           default: false
+          deprecated: true
+          x-hideOn: doc
+        is_eid:
+          description: |-
+            Send with a value of `true` if you wish to enable
+            [electronic identification (eID)](https://www.hellosign.com/features/electronic-id),
+            which requires the signer to verify their identity with an eID provider to sign a document.<br>
+            **Note**: eID is only available on the Premium API plan. Cannot be used in `test_mode`. Only works on requests with one signer.
+          type: boolean
+          default: false
         message:
           description: 'The custom message in the email that will be sent to the signers.'
           type: string
@@ -7251,6 +7151,8 @@ components:
           description: |-
             The new email address for the recipient.
 
+            This will generate a new `signature_id` value.
+
             **NOTE**: Optional if `name` is provided.
           type: string
           format: email
@@ -7267,7 +7169,6 @@ components:
           description: 'The new time when the signature request will expire. Unsigned signatures will be moved to the expired status, and no longer signable. See [Signature Request Expiration Date](https://developers.hellosign.com/docs/signature-request/expiration/) for details.'
           type: integer
           nullable: true
-          x-beta: closed
       type: object
     SubAttachment:
       required:
@@ -7538,9 +7439,401 @@ components:
           items:
             type: string
       type: object
+    SubFormFieldsPerDocumentCheckbox:
+      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
+      allOf:
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+        -
+          required:
+            - type
+            - is_checked
+          properties:
+            type:
+              description: 'A yes/no checkbox. Use the `SubFormFieldsPerDocumentCheckbox` class.'
+              type: string
+              default: checkbox
+            group:
+              description: 'String referencing group defined in `form_field_groups` parameter.'
+              type: string
+            is_checked:
+              description: '`true` for checking the checkbox field by default, otherwise `false`.'
+              type: boolean
+          type: object
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+    SubFormFieldsPerDocumentCheckboxMerge:
+      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
+      allOf:
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+        -
+          required:
+            - type
+          properties:
+            type:
+              description: 'A checkbox field that has default value set using pre-filled data. Use the `SubFormFieldsPerDocumentCheckboxMerge` class.'
+              type: string
+              default: checkbox-merge
+          type: object
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+    SubFormFieldsPerDocumentDateSigned:
+      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
+      allOf:
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+        -
+          required:
+            - type
+          properties:
+            type:
+              description: 'A date. Use the `SubFormFieldsPerDocumentDateSigned` class.'
+              type: string
+              default: date_signed
+            font_family:
+              description: 'Font family for the field.'
+              type: string
+              enum:
+                - helvetica
+                - arial
+                - courier
+                - calibri
+                - cambria
+                - georgia
+                - times
+                - trebuchet
+                - verdana
+                - roboto
+                - robotoMono
+                - notoSans
+                - notoSerif
+                - notoCJK-JP-Regular
+                - notoHebrew-Regular
+                - notoSanThaiMerged
+            font_size:
+              description: |-
+                The initial px font size for the field contents. Can be any integer value between `7` and `49`.
+
+                **NOTE**: Font size may be reduced during processing in order to fit the contents within the dimensions of the field.
+              type: integer
+          type: object
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+    SubFormFieldsPerDocumentDropdown:
+      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
+      allOf:
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+        -
+          required:
+            - type
+            - options
+          properties:
+            type:
+              description: 'An input field for dropdowns. Use the `SubFormFieldsPerDocumentDropdown` class.'
+              type: string
+              default: dropdown
+            options:
+              description: 'Array of string values representing dropdown values.'
+              type: array
+              items:
+                type: string
+              minItems: 1
+            content:
+              description: 'Selected value in `options` array. Value must exist in array.'
+              type: string
+            font_family:
+              description: 'Font family for the field.'
+              type: string
+              enum:
+                - helvetica
+                - arial
+                - courier
+                - calibri
+                - cambria
+                - georgia
+                - times
+                - trebuchet
+                - verdana
+                - roboto
+                - robotoMono
+                - notoSans
+                - notoSerif
+                - notoCJK-JP-Regular
+                - notoHebrew-Regular
+                - notoSanThaiMerged
+            font_size:
+              description: |-
+                The initial px font size for the field contents. Can be any integer value between `7` and `49`.
+
+                **NOTE**: Font size may be reduced during processing in order to fit the contents within the dimensions of the field.
+              type: integer
+          type: object
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+    SubFormFieldsPerDocumentHyperlink:
+      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
+      allOf:
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+        -
+          required:
+            - type
+            - content
+            - content_url
+          properties:
+            type:
+              description: 'A hyperlink field. Use the `SubFormFieldsPerDocumentHyperlink` class.'
+              type: string
+              default: hyperlink
+            content:
+              description: 'Link Text.'
+              type: string
+            content_url:
+              description: 'Link URL.'
+              type: string
+            font_family:
+              description: 'Font family for the field.'
+              type: string
+              enum:
+                - helvetica
+                - arial
+                - courier
+                - calibri
+                - cambria
+                - georgia
+                - times
+                - trebuchet
+                - verdana
+                - roboto
+                - robotoMono
+                - notoSans
+                - notoSerif
+                - notoCJK-JP-Regular
+                - notoHebrew-Regular
+                - notoSanThaiMerged
+            font_size:
+              description: |-
+                The initial px font size for the field contents. Can be any integer value between `7` and `49`.
+
+                **NOTE**: Font size may be reduced during processing in order to fit the contents within the dimensions of the field.
+              type: integer
+          type: object
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+    SubFormFieldsPerDocumentInitials:
+      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
+      allOf:
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+        -
+          required:
+            - type
+          properties:
+            type:
+              description: 'An input field for initials. Use the `SubFormFieldsPerDocumentInitials` class.'
+              type: string
+              default: initials
+          type: object
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+    SubFormFieldsPerDocumentRadio:
+      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
+      allOf:
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+        -
+          required:
+            - type
+            - group
+            - is_checked
+          properties:
+            type:
+              description: 'An input field for radios. Use the `SubFormFieldsPerDocumentRadio` class.'
+              type: string
+              default: radio
+            group:
+              description: 'String referencing group defined in `form_field_groups` parameter.'
+              type: string
+            is_checked:
+              description: '`true` for checking the radio field by default, otherwise `false`. Only one radio field per group can be `true`.'
+              type: boolean
+          type: object
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+    SubFormFieldsPerDocumentSignature:
+      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
+      allOf:
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+        -
+          required:
+            - type
+          properties:
+            type:
+              description: 'A signature input field. Use the `SubFormFieldsPerDocumentSignature` class.'
+              type: string
+              default: signature
+          type: object
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+    SubFormFieldsPerDocumentText:
+      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
+      allOf:
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+        -
+          required:
+            - type
+            - options
+          properties:
+            type:
+              description: 'A text input field. Use the `SubFormFieldsPerDocumentText` class.'
+              type: string
+              default: text
+            placeholder:
+              description: 'Placeholder value for text field.'
+              type: string
+            auto_fill_type:
+              description: 'Auto fill type for populating fields automatically. Check out the list of [auto fill types](/api/reference/constants/#auto-fill-types) to learn more about the possible values.'
+              type: string
+            link_id:
+              description: 'Link two or more text fields. Enter data into one linked text field, which automatically fill all other linked text fields.'
+              type: string
+            masked:
+              description: 'Masks entered data. For more information see [Masking sensitive information](https://faq.hellosign.com/hc/en-us/articles/360040742811-Masking-sensitive-information). `true` for masking the data in a text field, otherwise `false`.'
+              type: boolean
+            validation_type:
+              description: |-
+                Each text field may contain a `validation_type` parameter. Check out the list of [validation types](https://faq.hellosign.com/hc/en-us/articles/217115577) to learn more about the possible values.
+
+                **NOTE**: When using `custom_regex` you are required to pass a second parameter `validation_custom_regex` and you can optionally provide `validation_custom_regex_format_label` for the error message the user will see in case of an invalid value.
+              type: string
+              enum:
+                - numbers_only
+                - letters_only
+                - phone_number
+                - bank_routing_number
+                - bank_account_number
+                - email_address
+                - zip_code
+                - social_security_number
+                - employer_identification_number
+                - custom_regex
+            validation_custom_regex:
+              type: string
+            validation_custom_regex_format_label:
+              type: string
+            content:
+              description: 'Content of a `me_now` text field'
+              type: string
+            font_family:
+              description: 'Font family for the field.'
+              type: string
+              enum:
+                - helvetica
+                - arial
+                - courier
+                - calibri
+                - cambria
+                - georgia
+                - times
+                - trebuchet
+                - verdana
+                - roboto
+                - robotoMono
+                - notoSans
+                - notoSerif
+                - notoCJK-JP-Regular
+                - notoHebrew-Regular
+                - notoSanThaiMerged
+            font_size:
+              description: |-
+                The initial px font size for the field contents. Can be any integer value between `7` and `49`.
+
+                **NOTE**: Font size may be reduced during processing in order to fit the contents within the dimensions of the field.
+              type: integer
+          type: object
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+    SubFormFieldsPerDocumentTextMerge:
+      description: 'This class extends `SubFormFieldsPerDocumentBase`.'
+      allOf:
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+        -
+          required:
+            - type
+          properties:
+            type:
+              description: 'A text field that has default text set using pre-filled data. Use the `SubFormFieldsPerDocumentTextMerge` class.'
+              type: string
+              default: text-merge
+            font_family:
+              description: 'Font family for the field.'
+              type: string
+              enum:
+                - helvetica
+                - arial
+                - courier
+                - calibri
+                - cambria
+                - georgia
+                - times
+                - trebuchet
+                - verdana
+                - roboto
+                - robotoMono
+                - notoSans
+                - notoSerif
+                - notoCJK-JP-Regular
+                - notoHebrew-Regular
+                - notoSanThaiMerged
+            font_size:
+              description: |-
+                The initial px font size for the field contents. Can be any integer value between `7` and `49`.
+
+                **NOTE**: Font size may be reduced during processing in order to fit the contents within the dimensions of the field.
+              type: integer
+          type: object
+        -
+          $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+    SubFormFieldsPerDocumentTypeEnum:
+      type: string
+      enum:
+        - checkbox
+        - checkbox-merge
+        - date_signed
+        - dropdown
+        - hyperlink
+        - initials
+        - signature
+        - radio
+        - text
+        - text-merge
+    SubFormFieldsPerDocumentFontEnum:
+      type: string
+      enum:
+        - helvetica
+        - arial
+        - courier
+        - calibri
+        - cambria
+        - georgia
+        - times
+        - trebuchet
+        - verdana
+        - roboto
+        - robotoMono
+        - notoSans
+        - notoSerif
+        - notoCJK-JP-Regular
+        - notoHebrew-Regular
+        - notoSanThaiMerged
     SubFormFieldsPerDocumentBase:
       description: |-
-        The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
+        The fields that should appear on the document, expressed as an array of objects. (For more details you can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
 
         **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.
 
@@ -7591,6 +7884,8 @@ components:
         signer:
           description: |-
             Signer index identified by the offset in the signers parameter (0-based indexing), indicating which signer should fill out the field.
+
+            **NOTE**: To set the value of the field as the preparer you must set this to `me_now`
 
             **NOTE**: If type is `text-merge` or `checkbox-merge`, you must set this to sender in order to use pre-filled data.
           type: string
@@ -7849,7 +8144,7 @@ components:
       description: |-
         An array of elements and values serialized to a string, to be used to customize the app's signer page. (Only applies to some API plans)
 
-        Take a look at our [white labeling guide](/api/reference/white-labeling/) to learn more.
+        Take a look at our [white labeling guide](https://developers.hellosign.com/api/reference/premium-branding/) to learn more.
       properties:
         header_background_color:
           type: string
@@ -7926,7 +8221,6 @@ components:
             - Developer
             - 'Team Manager'
             - Admin
-          x-beta: closed
       type: object
     TeamCreateRequest:
       properties:
@@ -7960,7 +8254,6 @@ components:
         new_team_id:
           description: 'Id of the new Team.'
           type: string
-          x-beta: closed
         new_role:
           description: |-
             A new role member will take in a new Team.
@@ -7972,7 +8265,6 @@ components:
             - Developer
             - 'Team Manager'
             - Admin
-          x-beta: closed
       type: object
     TeamUpdateRequest:
       properties:
@@ -7995,6 +8287,119 @@ components:
           format: email
         skip_notification:
           description: 'If set to `true`, the user does not receive an email notification when a template has been shared with them. Defaults to `false`.'
+          type: boolean
+          default: false
+      type: object
+    TemplateCreateRequest:
+      required:
+        - signer_roles
+        - form_fields_per_document
+      properties:
+        files:
+          description: |-
+            Use `files[]` to indicate the uploaded file(s) to send for signature.
+
+            This endpoint requires either **files** or **file_urls[]**, but not both.
+          type: array
+          items:
+            type: string
+            format: binary
+        file_urls:
+          description: |-
+            Use `file_urls[]` to have Dropbox Sign download the file(s) to send for signature.
+
+            This endpoint requires either **files** or **file_urls[]**, but not both.
+          type: array
+          items:
+            type: string
+        allow_reassign:
+          description: |-
+            Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.
+
+            **Note**: Only available for Premium plan and higher.
+          type: boolean
+          default: false
+        attachments:
+          description: 'A list describing the attachments'
+          type: array
+          items:
+            $ref: '#/components/schemas/SubAttachment'
+        cc_roles:
+          description: 'The CC roles that must be assigned when using the template to send a signature request'
+          type: array
+          items:
+            type: string
+        client_id:
+          description: 'Client id of the app you''re using to create this draft. Used to apply the branding and callback url defined for the app.'
+          type: string
+        field_options:
+          $ref: '#/components/schemas/SubFieldOptions'
+        form_field_groups:
+          description: 'Group information for fields defined in `form_fields_per_document`. String-indexed JSON array with `group_label` and `requirement` keys. `form_fields_per_document` must contain fields referencing a group defined in `form_field_groups`.'
+          type: array
+          items:
+            $ref: '#/components/schemas/SubFormFieldGroup'
+        form_field_rules:
+          description: 'Conditional Logic rules for fields defined in `form_fields_per_document`.'
+          type: array
+          items:
+            $ref: '#/components/schemas/SubFormFieldRule'
+        form_fields_per_document:
+          description: |-
+            The fields that should appear on the document, expressed as an array of objects. (For more details you can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
+
+            **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.
+
+            * Text Field use `SubFormFieldsPerDocumentText`
+            * Dropdown Field use `SubFormFieldsPerDocumentDropdown`
+            * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink`
+            * Checkbox Field use `SubFormFieldsPerDocumentCheckbox`
+            * Radio Field use `SubFormFieldsPerDocumentRadio`
+            * Signature Field use `SubFormFieldsPerDocumentSignature`
+            * Date Signed Field use `SubFormFieldsPerDocumentDateSigned`
+            * Initials Field use `SubFormFieldsPerDocumentInitials`
+            * Text Merge Field use `SubFormFieldsPerDocumentTextMerge`
+            * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`
+          type: array
+          items:
+            $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+        merge_fields:
+          description: |-
+            Add merge fields to the template. Merge fields are placed by the user creating the template and used to pre-fill data by passing values into signature requests with the `custom_fields` parameter.
+            If the signature request using that template *does not* pass a value into a merge field, then an empty field remains in the document.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubMergeField'
+        message:
+          description: 'The default template email message.'
+          type: string
+          maxLength: 5000
+        metadata:
+          description: |-
+            Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.
+
+            Each request can include up to 10 metadata keys (or 50 nested metadata keys), with key names up to 40 characters long and values up to 1000 characters long.
+          type: object
+          maxItems: 10
+          additionalProperties: {}
+        signer_roles:
+          description: 'An array of the designated signer roles that must be specified when sending a SignatureRequest using this Template.'
+          type: array
+          items:
+            $ref: '#/components/schemas/SubTemplateRole'
+        subject:
+          description: 'The template title (alias).'
+          type: string
+          maxLength: 200
+        test_mode:
+          description: 'Whether this is a test, the signature request created from this draft will not be legally binding if set to `true`. Defaults to `false`.'
+          type: boolean
+          default: false
+        title:
+          description: 'The title you want to assign to the SignatureRequest.'
+          type: string
+        use_preexisting_fields:
+          description: 'Enable the detection of predefined PDF fields by setting the `use_preexisting_fields` to `true` (defaults to disabled, or `false`).'
           type: boolean
           default: false
       type: object
@@ -8067,7 +8472,7 @@ components:
             $ref: '#/components/schemas/SubFormFieldRule'
         form_fields_per_document:
           description: |-
-            The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
+            The fields that should appear on the document, expressed as an array of objects. (For more details you can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
 
             **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.
 
@@ -8249,7 +8654,7 @@ components:
             $ref: '#/components/schemas/SubFormFieldRule'
         form_fields_per_document:
           description: |-
-            The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
+            The fields that should appear on the document, expressed as an array of objects. (For more details you can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
 
             **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.
 
@@ -8325,7 +8730,6 @@ components:
             **Note**: This does not correspond to the **expires_at** returned in the response.
           type: integer
           nullable: true
-          x-beta: closed
       type: object
     UnclaimedDraftCreateEmbeddedRequest:
       description: ''
@@ -8413,7 +8817,7 @@ components:
             $ref: '#/components/schemas/SubFormFieldRule'
         form_fields_per_document:
           description: |-
-            The fields that should appear on the document, expressed as an array of objects. (We're currently fixing a bug where this property only accepts a two-dimensional array. You can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
+            The fields that should appear on the document, expressed as an array of objects. (For more details you can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
 
             **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.
 
@@ -8523,7 +8927,6 @@ components:
             **Note**: This does not correspond to the **expires_at** returned in the response.
           type: integer
           nullable: true
-          x-beta: closed
       type: object
     UnclaimedDraftCreateEmbeddedWithTemplateRequest:
       required:
@@ -8703,6 +9106,211 @@ components:
           type: boolean
           default: false
       type: object
+    AccountCreateResponse:
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountResponse'
+        oauth_data:
+          $ref: '#/components/schemas/OAuthTokenResponse'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    AccountGetResponse:
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountResponse'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    AccountVerifyResponse:
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountVerifyResponseAccount'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    ApiAppGetResponse:
+      properties:
+        api_app:
+          $ref: '#/components/schemas/ApiAppResponse'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    ApiAppListResponse:
+      properties:
+        api_apps:
+          description: 'Contains information about API Apps.'
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiAppResponse'
+        list_info:
+          $ref: '#/components/schemas/ListInfoResponse'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    BulkSendJobGetResponse:
+      properties:
+        bulk_send_job:
+          $ref: '#/components/schemas/BulkSendJobResponse'
+        list_info:
+          $ref: '#/components/schemas/ListInfoResponse'
+        signature_requests:
+          description: 'Contains information about the Signature Requests sent in bulk.'
+          type: array
+          items:
+            $ref: '#/components/schemas/BulkSendJobGetResponseSignatureRequests'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    BulkSendJobListResponse:
+      properties:
+        bulk_send_jobs:
+          description: 'Contains a list of BulkSendJobs that the API caller has access to.'
+          type: array
+          items:
+            $ref: '#/components/schemas/BulkSendJobResponse'
+        list_info:
+          $ref: '#/components/schemas/ListInfoResponse'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    BulkSendJobSendResponse:
+      properties:
+        bulk_send_job:
+          $ref: '#/components/schemas/BulkSendJobResponse'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    EmbeddedEditUrlResponse:
+      properties:
+        embedded:
+          $ref: '#/components/schemas/EmbeddedEditUrlResponseEmbedded'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    EmbeddedSignUrlResponse:
+      properties:
+        embedded:
+          $ref: '#/components/schemas/EmbeddedSignUrlResponseEmbedded'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    ErrorResponse:
+      required:
+        - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorResponseError'
+      type: object
+    EventCallbackRequest:
+      title: EventCallbackRequest
+      required:
+        - event
+      properties:
+        event:
+          $ref: '#/components/schemas/EventCallbackRequestEvent'
+        account:
+          $ref: '#/components/schemas/AccountResponse'
+        signature_request:
+          $ref: '#/components/schemas/SignatureRequestResponse'
+        template:
+          $ref: '#/components/schemas/TemplateResponse'
+      type: object
+    FileResponse:
+      properties:
+        file_url:
+          description: 'URL to the file.'
+          type: string
+        expires_at:
+          description: 'When the link expires.'
+          type: integer
+      type: object
+      x-internal: true
+    FileResponseDataUri:
+      properties:
+        data_uri:
+          description: 'File as base64 encoded string.'
+          type: string
+      type: object
+      x-internal: true
+    ReportCreateResponse:
+      properties:
+        report:
+          $ref: '#/components/schemas/ReportResponse'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    SignatureRequestGetResponse:
+      properties:
+        signature_request:
+          $ref: '#/components/schemas/SignatureRequestResponse'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    SignatureRequestListResponse:
+      properties:
+        signature_requests:
+          description: 'Contains information about signature requests.'
+          type: array
+          items:
+            $ref: '#/components/schemas/SignatureRequestResponse'
+        list_info:
+          $ref: '#/components/schemas/ListInfoResponse'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
     AccountResponse:
       properties:
         account_id:
@@ -8740,46 +9348,20 @@ components:
           nullable: true
       type: object
       x-internal: true
-    AccountCreateResponse:
+    OAuthTokenResponse:
       properties:
-        account:
-          $ref: '#/components/schemas/AccountResponse'
-        oauth_data:
-          $ref: '#/components/schemas/OAuthTokenResponse'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
-    AccountGetResponse:
-      properties:
-        account:
-          $ref: '#/components/schemas/AccountResponse'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
-    AccountVerifyResponse:
-      properties:
-        account:
-          $ref: '#/components/schemas/AccountVerifyResponseAccount'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
-    AccountVerifyResponseAccount:
-      properties:
-        email_address:
-          description: 'The email address associated with the Account.'
+        access_token:
           type: string
+        token_type:
+          type: string
+        refresh_token:
+          type: string
+        expires_in:
+          description: 'Number of seconds until the `access_token` expires. Uses epoch time.'
+          type: integer
+        state:
+          type: string
+          nullable: true
       type: object
       x-internal: true
     AccountResponseQuotas:
@@ -8805,6 +9387,13 @@ components:
           description: 'SMS verifications  remaining.'
           type: integer
           nullable: true
+      type: object
+      x-internal: true
+    AccountVerifyResponseAccount:
+      properties:
+        email_address:
+          description: 'The email address associated with the Account.'
+          type: string
       type: object
       x-internal: true
     ApiAppResponse:
@@ -8839,33 +9428,6 @@ components:
           $ref: '#/components/schemas/ApiAppResponseOwnerAccount'
         white_labeling_options:
           $ref: '#/components/schemas/ApiAppResponseWhiteLabelingOptions'
-      type: object
-      x-internal: true
-    ApiAppGetResponse:
-      properties:
-        api_app:
-          $ref: '#/components/schemas/ApiAppResponse'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
-    ApiAppListResponse:
-      properties:
-        api_apps:
-          description: 'Contains information about API Apps.'
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiAppResponse'
-        list_info:
-          $ref: '#/components/schemas/ListInfoResponse'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
       type: object
       x-internal: true
     ApiAppResponseOAuth:
@@ -8960,24 +9522,6 @@ components:
           type: integer
       type: object
       x-internal: true
-    BulkSendJobGetResponse:
-      properties:
-        bulk_send_job:
-          $ref: '#/components/schemas/BulkSendJobResponse'
-        list_info:
-          $ref: '#/components/schemas/ListInfoResponse'
-        signature_requests:
-          description: 'Contains information about the Signature Requests sent in bulk.'
-          type: array
-          items:
-            $ref: '#/components/schemas/BulkSendJobGetResponseSignatureRequests'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
     BulkSendJobGetResponseSignatureRequests:
       title: BulkSendJobGetResponseSignatureRequests
       type: object
@@ -8990,44 +9534,6 @@ components:
               description: 'The id of the BulkSendJob.'
               type: string
       x-internal: true
-    BulkSendJobListResponse:
-      properties:
-        bulk_send_jobs:
-          description: 'Contains a list of BulkSendJobs that the API caller has access to.'
-          type: array
-          items:
-            $ref: '#/components/schemas/BulkSendJobResponse'
-        list_info:
-          $ref: '#/components/schemas/ListInfoResponse'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
-    BulkSendJobSendResponse:
-      properties:
-        bulk_send_job:
-          $ref: '#/components/schemas/BulkSendJobResponse'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
-    EmbeddedEditUrlResponse:
-      properties:
-        embedded:
-          $ref: '#/components/schemas/EmbeddedEditUrlResponseEmbedded'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
     EmbeddedEditUrlResponseEmbedded:
       description: 'An embedded template object.'
       properties:
@@ -9037,17 +9543,6 @@ components:
         expires_at:
           description: 'The specific time that the the `edit_url` link expires, in epoch.'
           type: integer
-      type: object
-      x-internal: true
-    EmbeddedSignUrlResponse:
-      properties:
-        embedded:
-          $ref: '#/components/schemas/EmbeddedSignUrlResponseEmbedded'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
       type: object
       x-internal: true
     EmbeddedSignUrlResponseEmbedded:
@@ -9061,13 +9556,6 @@ components:
           type: integer
       type: object
       x-internal: true
-    ErrorResponse:
-      required:
-        - error
-      properties:
-        error:
-          $ref: '#/components/schemas/ErrorResponseError'
-      type: object
     ErrorResponseError:
       description: 'Contains information about an error that occurred.'
       required:
@@ -9083,20 +9571,6 @@ components:
         error_name:
           description: 'Name of the error.'
           type: string
-      type: object
-    EventCallbackRequest:
-      title: EventCallbackRequest
-      required:
-        - event
-      properties:
-        event:
-          $ref: '#/components/schemas/EventCallbackRequestEvent'
-        account:
-          $ref: '#/components/schemas/AccountResponse'
-        signature_request:
-          $ref: '#/components/schemas/SignatureRequestResponse'
-        template:
-          $ref: '#/components/schemas/TemplateResponse'
       type: object
     EventCallbackRequestEvent:
       description: 'Basic information about the event that occurred.'
@@ -9161,23 +9635,6 @@ components:
           type: string
           nullable: true
       type: object
-    FileResponse:
-      properties:
-        file_url:
-          description: 'URL to the file.'
-          type: string
-        expires_at:
-          description: 'When the link expires.'
-          type: integer
-      type: object
-      x-internal: true
-    FileResponseDataUri:
-      properties:
-        data_uri:
-          description: 'File as base64 encoded string.'
-          type: string
-      type: object
-      x-internal: true
     ListInfoResponse:
       description: 'Contains pagination information about the data returned.'
       properties:
@@ -9194,169 +9651,6 @@ components:
         page_size:
           description: 'Objects returned per page.'
           type: integer
-      type: object
-      x-internal: true
-    SignatureRequestResponseDataTypeEnum:
-      type: string
-      enum:
-        - text
-        - checkbox
-        - date_signed
-        - dropdown
-        - initials
-        - radio
-        - signature
-        - text-merge
-        - checkbox-merge
-    SignatureRequestResponseDataValueText:
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SignatureRequestResponseDataBase'
-        -
-          properties:
-            type:
-              description: 'A text input field'
-              type: string
-              default: text
-            value:
-              description: 'The value of the form field.'
-              type: string
-          type: object
-    SignatureRequestResponseDataValueDropdown:
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SignatureRequestResponseDataBase'
-        -
-          properties:
-            type:
-              description: 'An input field for dropdowns'
-              type: string
-              default: dropdown
-            value:
-              description: 'The value of the form field.'
-              type: string
-          type: object
-    SignatureRequestResponseDataValueRadio:
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SignatureRequestResponseDataBase'
-        -
-          properties:
-            type:
-              description: 'An input field for radios'
-              type: string
-              default: radio
-            value:
-              description: 'The value of the form field.'
-              type: boolean
-          type: object
-    SignatureRequestResponseDataValueDateSigned:
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SignatureRequestResponseDataBase'
-        -
-          properties:
-            type:
-              description: 'A date'
-              type: string
-              default: date_signed
-            value:
-              description: 'The value of the form field.'
-              type: string
-          type: object
-    SignatureRequestResponseDataValueInitials:
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SignatureRequestResponseDataBase'
-        -
-          properties:
-            type:
-              description: 'An input field for initials'
-              type: string
-              default: initials
-            value:
-              description: 'The value of the form field.'
-              type: string
-          type: object
-    SignatureRequestResponseDataValueCheckbox:
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SignatureRequestResponseDataBase'
-        -
-          properties:
-            type:
-              description: 'A yes/no checkbox'
-              type: string
-              default: checkbox
-            value:
-              description: 'The value of the form field.'
-              type: boolean
-          type: object
-    SignatureRequestResponseDataValueSignature:
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SignatureRequestResponseDataBase'
-        -
-          properties:
-            type:
-              description: 'A signature input field'
-              type: string
-              default: signature
-            value:
-              description: 'The value of the form field.'
-              type: string
-          type: object
-    SignatureRequestResponseDataValueTextMerge:
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SignatureRequestResponseDataBase'
-        -
-          properties:
-            type:
-              description: 'A text field that has default text set by the api'
-              type: string
-              default: text-merge
-            value:
-              description: 'The value of the form field.'
-              type: string
-          type: object
-    SignatureRequestResponseDataValueCheckboxMerge:
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SignatureRequestResponseDataBase'
-        -
-          properties:
-            type:
-              description: 'A checkbox field that has default value set by the api'
-              type: string
-              default: checkbox-merge
-            value:
-              description: 'The value of the form field.'
-              type: string
-          type: object
-    OAuthTokenResponse:
-      properties:
-        access_token:
-          type: string
-        token_type:
-          type: string
-        refresh_token:
-          type: string
-        expires_in:
-          description: 'Number of seconds until the `access_token` expires. Uses epoch time.'
-          type: integer
-        state:
-          type: string
-          nullable: true
       type: object
       x-internal: true
     ReportResponse:
@@ -9378,17 +9672,6 @@ components:
             enum:
               - user_activity
               - document_status
-      type: object
-      x-internal: true
-    ReportCreateResponse:
-      properties:
-        report:
-          $ref: '#/components/schemas/ReportResponse'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
       type: object
       x-internal: true
     SignatureRequestResponse:
@@ -9428,7 +9711,6 @@ components:
         expires_at:
           description: 'The time when the signature request will expire unsigned signatures. See [Signature Request Expiration Date](https://developers.hellosign.com/docs/signature-request/expiration/) for details.'
           type: integer
-          x-beta: closed
         is_complete:
           description: 'Whether or not the SignatureRequest has been fully executed by all signers.'
           type: boolean
@@ -9492,33 +9774,6 @@ components:
             $ref: '#/components/schemas/SignatureRequestResponseSignatures'
       type: object
       x-internal: true
-    SignatureRequestGetResponse:
-      properties:
-        signature_request:
-          $ref: '#/components/schemas/SignatureRequestResponse'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
-    SignatureRequestListResponse:
-      properties:
-        signature_requests:
-          description: 'Contains information about signature requests.'
-          type: array
-          items:
-            $ref: '#/components/schemas/SignatureRequestResponse'
-        list_info:
-          $ref: '#/components/schemas/ListInfoResponse'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
     SignatureRequestResponseAttachment:
       description: 'Signer attachments.'
       required:
@@ -9549,11 +9804,6 @@ components:
           nullable: true
       type: object
       x-internal: true
-    SignatureRequestResponseCustomFieldTypeEnum:
-      type: string
-      enum:
-        - text
-        - checkbox
     SignatureRequestResponseCustomFieldBase:
       description: |-
         An array of Custom Field objects containing the name and type of each custom field.
@@ -9587,35 +9837,15 @@ components:
           checkbox: '#/components/schemas/SignatureRequestResponseCustomFieldCheckbox'
       x-internal: true
       x-base-class: true
-    SignatureRequestResponseCustomFieldText:
-      description: 'This class extends `SignatureRequestResponseCustomFieldBase`.'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/SignatureRequestResponseCustomFieldBase'
-        -
-          required:
-            - type
-            - options
-          properties:
-            type:
-              description: 'The type of this Custom Field. Only ''text'' and ''checkbox'' are currently supported.'
-              type: string
-              default: text
-            value:
-              description: 'A text string for text fields'
-              type: string
-          type: object
     SignatureRequestResponseCustomFieldCheckbox:
       description: 'This class extends `SignatureRequestResponseCustomFieldBase`.'
+      required:
+        - type
       type: object
       allOf:
         -
           $ref: '#/components/schemas/SignatureRequestResponseCustomFieldBase'
         -
-          required:
-            - type
-            - options
           properties:
             type:
               description: 'The type of this Custom Field. Only ''text'' and ''checkbox'' are currently supported.'
@@ -9624,7 +9854,28 @@ components:
             value:
               description: 'A true/false for checkbox fields'
               type: boolean
-          type: object
+    SignatureRequestResponseCustomFieldText:
+      description: 'This class extends `SignatureRequestResponseCustomFieldBase`.'
+      required:
+        - type
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/SignatureRequestResponseCustomFieldBase'
+        -
+          properties:
+            type:
+              description: 'The type of this Custom Field. Only ''text'' and ''checkbox'' are currently supported.'
+              type: string
+              default: text
+            value:
+              description: 'A text string for text fields'
+              type: string
+    SignatureRequestResponseCustomFieldTypeEnum:
+      type: string
+      enum:
+        - text
+        - checkbox
     SignatureRequestResponseDataBase:
       description: 'An array of form field objects containing the name, value, and type of each textbox or checkmark field filled in by the signers.'
       properties:
@@ -9657,6 +9908,144 @@ components:
           checkbox-merge: '#/components/schemas/SignatureRequestResponseDataValueCheckboxMerge'
       x-internal: true
       x-base-class: true
+    SignatureRequestResponseDataTypeEnum:
+      type: string
+      enum:
+        - text
+        - checkbox
+        - date_signed
+        - dropdown
+        - initials
+        - radio
+        - signature
+        - text-merge
+        - checkbox-merge
+    SignatureRequestResponseDataValueCheckbox:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/SignatureRequestResponseDataBase'
+        -
+          properties:
+            type:
+              description: 'A yes/no checkbox'
+              type: string
+              default: checkbox
+            value:
+              description: 'The value of the form field.'
+              type: boolean
+    SignatureRequestResponseDataValueCheckboxMerge:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/SignatureRequestResponseDataBase'
+        -
+          properties:
+            type:
+              description: 'A checkbox field that has default value set by the api'
+              type: string
+              default: checkbox-merge
+            value:
+              description: 'The value of the form field.'
+              type: string
+    SignatureRequestResponseDataValueDateSigned:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/SignatureRequestResponseDataBase'
+        -
+          properties:
+            type:
+              description: 'A date'
+              type: string
+              default: date_signed
+            value:
+              description: 'The value of the form field.'
+              type: string
+    SignatureRequestResponseDataValueDropdown:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/SignatureRequestResponseDataBase'
+        -
+          properties:
+            type:
+              description: 'An input field for dropdowns'
+              type: string
+              default: dropdown
+            value:
+              description: 'The value of the form field.'
+              type: string
+    SignatureRequestResponseDataValueInitials:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/SignatureRequestResponseDataBase'
+        -
+          properties:
+            type:
+              description: 'An input field for initials'
+              type: string
+              default: initials
+            value:
+              description: 'The value of the form field.'
+              type: string
+    SignatureRequestResponseDataValueRadio:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/SignatureRequestResponseDataBase'
+        -
+          properties:
+            type:
+              description: 'An input field for radios'
+              type: string
+              default: radio
+            value:
+              description: 'The value of the form field.'
+              type: boolean
+    SignatureRequestResponseDataValueSignature:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/SignatureRequestResponseDataBase'
+        -
+          properties:
+            type:
+              description: 'A signature input field'
+              type: string
+              default: signature
+            value:
+              description: 'The value of the form field.'
+              type: string
+    SignatureRequestResponseDataValueText:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/SignatureRequestResponseDataBase'
+        -
+          properties:
+            type:
+              description: 'A text input field'
+              type: string
+              default: text
+            value:
+              description: 'The value of the form field.'
+              type: string
+    SignatureRequestResponseDataValueTextMerge:
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/SignatureRequestResponseDataBase'
+        -
+          properties:
+            type:
+              description: 'A text field that has default text set by the api'
+              type: string
+              default: text-merge
+            value:
+              description: 'The value of the form field.'
+              type: string
     SignatureRequestResponseSignatures:
       description: 'An array of signature objects, 1 for each signer.'
       properties:
@@ -9756,18 +10145,6 @@ components:
             type: string
       type: object
       x-internal: true
-    TeamParentResponse:
-      description: 'Information about the parent team if a team has one, set to `null` otherwise.'
-      properties:
-        team_id:
-          description: 'The id of a team'
-          type: string
-        name:
-          description: 'The name of a team'
-          type: string
-      type: object
-      nullable: true
-      x-internal: true
     TeamInfoResponse:
       properties:
         team_id:
@@ -9784,30 +10161,6 @@ components:
         num_sub_teams:
           description: 'Number of sub teams within a team'
           type: integer
-      type: object
-      x-internal: true
-    TeamGetInfoResponse:
-      properties:
-        team:
-          $ref: '#/components/schemas/TeamInfoResponse'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
-    TeamMemberResponse:
-      properties:
-        account_id:
-          description: 'Account id of the team member.'
-          type: string
-        email_address:
-          description: 'Email address of the team member.'
-          type: string
-        role:
-          description: 'The specific role a member has on the team.'
-          type: string
       type: object
       x-internal: true
     TeamInviteResponse:
@@ -9832,18 +10185,30 @@ components:
           type: integer
       type: object
       x-internal: true
-    TeamInvitesResponse:
+    TeamMemberResponse:
       properties:
-        team_invites:
-          description: 'Contains a list of team invites and their roles.'
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamInviteResponse'
-        warnings:
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
+        account_id:
+          description: 'Account id of the team member.'
+          type: string
+        email_address:
+          description: 'Email address of the team member.'
+          type: string
+        role:
+          description: 'The specific role a member has on the team.'
+          type: string
       type: object
+      x-internal: true
+    TeamParentResponse:
+      description: 'Information about the parent team if a team has one, set to `null` otherwise.'
+      properties:
+        team_id:
+          description: 'The id of a team'
+          type: string
+        name:
+          description: 'The name of a team'
+          type: string
+      type: object
+      nullable: true
       x-internal: true
     SubTeamResponse:
       properties:
@@ -9853,47 +10218,6 @@ components:
         name:
           description: 'The name of a team'
           type: string
-      type: object
-      x-internal: true
-    TeamGetResponse:
-      properties:
-        team:
-          $ref: '#/components/schemas/TeamResponse'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
-    TeamMembersResponse:
-      properties:
-        team_members:
-          description: 'Contains a list of team members and their roles for a specific team.'
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamMemberResponse'
-        list_info:
-          $ref: '#/components/schemas/ListInfoResponse'
-        warnings:
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
-    TeamSubTeamsResponse:
-      properties:
-        sub_teams:
-          description: 'Contains a list with sub teams.'
-          type: array
-          items:
-            $ref: '#/components/schemas/SubTeamResponse'
-        list_info:
-          $ref: '#/components/schemas/ListInfoResponse'
-        warnings:
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
       type: object
       x-internal: true
     TemplateResponse:
@@ -9970,88 +10294,6 @@ components:
           nullable: true
       type: object
       x-internal: true
-    TemplateCreateEmbeddedDraftResponse:
-      properties:
-        template:
-          $ref: '#/components/schemas/TemplateCreateEmbeddedDraftResponseTemplate'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
-    TemplateCreateEmbeddedDraftResponseTemplate:
-      description: 'Template object with parameters: `template_id`, `edit_url`, `expires_at`.'
-      properties:
-        template_id:
-          description: 'The id of the Template.'
-          type: string
-        edit_url:
-          description: 'Link to edit the template.'
-          type: string
-        expires_at:
-          description: 'When the link expires.'
-          type: integer
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
-    TemplateUpdateFilesResponse:
-      properties:
-        template:
-          $ref: '#/components/schemas/TemplateUpdateFilesResponseTemplate'
-      type: object
-      x-internal: true
-    TemplateUpdateFilesResponseTemplate:
-      description: 'Contains template id'
-      properties:
-        template_id:
-          description: 'The id of the Template.'
-          type: string
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
-    TemplateGetResponse:
-      properties:
-        template:
-          $ref: '#/components/schemas/TemplateResponse'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
-    TemplateListResponse:
-      properties:
-        templates:
-          description: 'List of templates that the API caller has access to.'
-          type: array
-          items:
-            $ref: '#/components/schemas/TemplateResponse'
-        list_info:
-          $ref: '#/components/schemas/ListInfoResponse'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
-    TemplateEditResponse:
-      properties:
-        template_id:
-          description: 'The id of the Template.'
-          type: string
-      type: object
     TemplateResponseAccount:
       properties:
         account_id:
@@ -10094,6 +10336,34 @@ components:
       properties:
         name:
           description: 'The name of the Role.'
+          type: string
+      type: object
+      x-internal: true
+    TemplateCreateEmbeddedDraftResponseTemplate:
+      description: 'Template object with parameters: `template_id`, `edit_url`, `expires_at`.'
+      properties:
+        template_id:
+          description: 'The id of the Template.'
+          type: string
+        edit_url:
+          description: 'Link to edit the template.'
+          type: string
+        expires_at:
+          description: 'When the link expires.'
+          type: integer
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+          deprecated: true
+      type: object
+      x-internal: true
+    TemplateCreateResponseTemplate:
+      description: 'Template object with parameters: `template_id`.'
+      properties:
+        template_id:
+          description: 'The id of the Template.'
           type: string
       type: object
       x-internal: true
@@ -10172,15 +10442,33 @@ components:
           checkbox: '#/components/schemas/TemplateResponseDocumentCustomFieldCheckbox'
       x-internal: true
       x-base-class: true
-    TemplateResponseDocumentCustomFieldText:
+    TemplateResponseDocumentCustomFieldCheckbox:
       description: 'This class extends `TemplateResponseDocumentCustomFieldBase`'
+      required:
+        - type
       type: object
       allOf:
         -
           $ref: '#/components/schemas/TemplateResponseDocumentCustomFieldBase'
         -
-          required:
-            - type
+          properties:
+            type:
+              description: |-
+                The type of this Custom Field. Only `text` and `checkbox` are currently supported.
+
+                * Text uses `TemplateResponseDocumentCustomFieldText`
+                * Checkbox uses `TemplateResponseDocumentCustomFieldCheckbox`
+              type: string
+              default: checkbox
+    TemplateResponseDocumentCustomFieldText:
+      description: 'This class extends `TemplateResponseDocumentCustomFieldBase`'
+      required:
+        - type
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/TemplateResponseDocumentCustomFieldBase'
+        -
           properties:
             type:
               description: |-
@@ -10201,26 +10489,6 @@ components:
             fontFamily:
               description: 'Font family used in this form field''s text.'
               type: string
-          type: object
-    TemplateResponseDocumentCustomFieldCheckbox:
-      description: 'This class extends `TemplateResponseDocumentCustomFieldBase`'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/TemplateResponseDocumentCustomFieldBase'
-        -
-          required:
-            - type
-          properties:
-            type:
-              description: |-
-                The type of this Custom Field. Only `text` and `checkbox` are currently supported.
-
-                * Text uses `TemplateResponseDocumentCustomFieldText`
-                * Checkbox uses `TemplateResponseDocumentCustomFieldCheckbox`
-              type: string
-              default: checkbox
-          type: object
     TemplateResponseDocumentFieldGroup:
       properties:
         name:
@@ -10295,15 +10563,195 @@ components:
           initials: '#/components/schemas/TemplateResponseDocumentFormFieldInitials'
       x-internal: true
       x-base-class: true
-    TemplateResponseDocumentFormFieldText:
+    TemplateResponseDocumentFormFieldCheckbox:
       description: 'This class extends `TemplateResponseDocumentFormFieldBase`'
+      required:
+        - type
       type: object
       allOf:
         -
           $ref: '#/components/schemas/TemplateResponseDocumentFormFieldBase'
         -
-          required:
-            - type
+          properties:
+            type:
+              description: |-
+                The type of this form field. See [field types](/api/reference/constants/#field-types).
+
+                * Text Field uses `TemplateResponseDocumentFormFieldText`
+                * Dropdown Field uses `TemplateResponseDocumentFormFieldDropdown`
+                * Hyperlink Field uses `TemplateResponseDocumentFormFieldHyperlink`
+                * Checkbox Field uses `TemplateResponseDocumentFormFieldCheckbox`
+                * Radio Field uses `TemplateResponseDocumentFormFieldRadio`
+                * Signature Field uses `TemplateResponseDocumentFormFieldSignature`
+                * Date Signed Field uses `TemplateResponseDocumentFormFieldDateSigned`
+                * Initials Field uses `TemplateResponseDocumentFormFieldInitials`
+              type: string
+              default: checkbox
+    TemplateResponseDocumentFormFieldDateSigned:
+      description: 'This class extends `TemplateResponseDocumentFormFieldBase`'
+      required:
+        - type
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/TemplateResponseDocumentFormFieldBase'
+        -
+          properties:
+            type:
+              description: |-
+                The type of this form field. See [field types](/api/reference/constants/#field-types).
+
+                * Text Field uses `TemplateResponseDocumentFormFieldText`
+                * Dropdown Field uses `TemplateResponseDocumentFormFieldDropdown`
+                * Hyperlink Field uses `TemplateResponseDocumentFormFieldHyperlink`
+                * Checkbox Field uses `TemplateResponseDocumentFormFieldCheckbox`
+                * Radio Field uses `TemplateResponseDocumentFormFieldRadio`
+                * Signature Field uses `TemplateResponseDocumentFormFieldSignature`
+                * Date Signed Field uses `TemplateResponseDocumentFormFieldDateSigned`
+                * Initials Field uses `TemplateResponseDocumentFormFieldInitials`
+              type: string
+              default: date_signed
+    TemplateResponseDocumentFormFieldDropdown:
+      description: 'This class extends `TemplateResponseDocumentFormFieldBase`'
+      required:
+        - type
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/TemplateResponseDocumentFormFieldBase'
+        -
+          properties:
+            type:
+              description: |-
+                The type of this form field. See [field types](/api/reference/constants/#field-types).
+
+                * Text Field uses `TemplateResponseDocumentFormFieldText`
+                * Dropdown Field uses `TemplateResponseDocumentFormFieldDropdown`
+                * Hyperlink Field uses `TemplateResponseDocumentFormFieldHyperlink`
+                * Checkbox Field uses `TemplateResponseDocumentFormFieldCheckbox`
+                * Radio Field uses `TemplateResponseDocumentFormFieldRadio`
+                * Signature Field uses `TemplateResponseDocumentFormFieldSignature`
+                * Date Signed Field uses `TemplateResponseDocumentFormFieldDateSigned`
+                * Initials Field uses `TemplateResponseDocumentFormFieldInitials`
+              type: string
+              default: dropdown
+    TemplateResponseDocumentFormFieldHyperlink:
+      description: 'This class extends `TemplateResponseDocumentFormFieldBase`'
+      required:
+        - type
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/TemplateResponseDocumentFormFieldBase'
+        -
+          properties:
+            type:
+              description: |-
+                The type of this form field. See [field types](/api/reference/constants/#field-types).
+
+                * Text Field uses `TemplateResponseDocumentFormFieldText`
+                * Dropdown Field uses `TemplateResponseDocumentFormFieldDropdown`
+                * Hyperlink Field uses `TemplateResponseDocumentFormFieldHyperlink`
+                * Checkbox Field uses `TemplateResponseDocumentFormFieldCheckbox`
+                * Radio Field uses `TemplateResponseDocumentFormFieldRadio`
+                * Signature Field uses `TemplateResponseDocumentFormFieldSignature`
+                * Date Signed Field uses `TemplateResponseDocumentFormFieldDateSigned`
+                * Initials Field uses `TemplateResponseDocumentFormFieldInitials`
+              type: string
+              default: hyperlink
+            avg_text_length:
+              $ref: '#/components/schemas/TemplateResponseFieldAvgTextLength'
+            isMultiline:
+              description: 'Whether this form field is multiline text.'
+              type: boolean
+            originalFontSize:
+              description: 'Original font size used in this form field''s text.'
+              type: integer
+            fontFamily:
+              description: 'Font family used in this form field''s text.'
+              type: string
+    TemplateResponseDocumentFormFieldInitials:
+      description: 'This class extends `TemplateResponseDocumentFormFieldBase`'
+      required:
+        - type
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/TemplateResponseDocumentFormFieldBase'
+        -
+          properties:
+            type:
+              description: |-
+                The type of this form field. See [field types](/api/reference/constants/#field-types).
+
+                * Text Field uses `TemplateResponseDocumentFormFieldText`
+                * Dropdown Field uses `TemplateResponseDocumentFormFieldDropdown`
+                * Hyperlink Field uses `TemplateResponseDocumentFormFieldHyperlink`
+                * Checkbox Field uses `TemplateResponseDocumentFormFieldCheckbox`
+                * Radio Field uses `TemplateResponseDocumentFormFieldRadio`
+                * Signature Field uses `TemplateResponseDocumentFormFieldSignature`
+                * Date Signed Field uses `TemplateResponseDocumentFormFieldDateSigned`
+                * Initials Field uses `TemplateResponseDocumentFormFieldInitials`
+              type: string
+              default: initials
+    TemplateResponseDocumentFormFieldRadio:
+      description: 'This class extends `TemplateResponseDocumentFormFieldBase`'
+      required:
+        - type
+        - group
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/TemplateResponseDocumentFormFieldBase'
+        -
+          properties:
+            type:
+              description: |-
+                The type of this form field. See [field types](/api/reference/constants/#field-types).
+
+                * Text Field uses `TemplateResponseDocumentFormFieldText`
+                * Dropdown Field uses `TemplateResponseDocumentFormFieldDropdown`
+                * Hyperlink Field uses `TemplateResponseDocumentFormFieldHyperlink`
+                * Checkbox Field uses `TemplateResponseDocumentFormFieldCheckbox`
+                * Radio Field uses `TemplateResponseDocumentFormFieldRadio`
+                * Signature Field uses `TemplateResponseDocumentFormFieldSignature`
+                * Date Signed Field uses `TemplateResponseDocumentFormFieldDateSigned`
+                * Initials Field uses `TemplateResponseDocumentFormFieldInitials`
+              type: string
+              default: radio
+    TemplateResponseDocumentFormFieldSignature:
+      description: 'This class extends `TemplateResponseDocumentFormFieldBase`'
+      required:
+        - type
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/TemplateResponseDocumentFormFieldBase'
+        -
+          properties:
+            type:
+              description: |-
+                The type of this form field. See [field types](/api/reference/constants/#field-types).
+
+                * Text Field uses `TemplateResponseDocumentFormFieldText`
+                * Dropdown Field uses `TemplateResponseDocumentFormFieldDropdown`
+                * Hyperlink Field uses `TemplateResponseDocumentFormFieldHyperlink`
+                * Checkbox Field uses `TemplateResponseDocumentFormFieldCheckbox`
+                * Radio Field uses `TemplateResponseDocumentFormFieldRadio`
+                * Signature Field uses `TemplateResponseDocumentFormFieldSignature`
+                * Date Signed Field uses `TemplateResponseDocumentFormFieldDateSigned`
+                * Initials Field uses `TemplateResponseDocumentFormFieldInitials`
+              type: string
+              default: signature
+    TemplateResponseDocumentFormFieldText:
+      description: 'This class extends `TemplateResponseDocumentFormFieldBase`'
+      required:
+        - type
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/TemplateResponseDocumentFormFieldBase'
+        -
           properties:
             type:
               description: |-
@@ -10345,194 +10793,6 @@ components:
                 - employer_identification_number
                 - custom_regex
               nullable: true
-          type: object
-    TemplateResponseDocumentFormFieldDropdown:
-      description: 'This class extends `TemplateResponseDocumentFormFieldBase`'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/TemplateResponseDocumentFormFieldBase'
-        -
-          required:
-            - type
-          properties:
-            type:
-              description: |-
-                The type of this form field. See [field types](/api/reference/constants/#field-types).
-
-                * Text Field uses `TemplateResponseDocumentFormFieldText`
-                * Dropdown Field uses `TemplateResponseDocumentFormFieldDropdown`
-                * Hyperlink Field uses `TemplateResponseDocumentFormFieldHyperlink`
-                * Checkbox Field uses `TemplateResponseDocumentFormFieldCheckbox`
-                * Radio Field uses `TemplateResponseDocumentFormFieldRadio`
-                * Signature Field uses `TemplateResponseDocumentFormFieldSignature`
-                * Date Signed Field uses `TemplateResponseDocumentFormFieldDateSigned`
-                * Initials Field uses `TemplateResponseDocumentFormFieldInitials`
-              type: string
-              default: dropdown
-          type: object
-    TemplateResponseDocumentFormFieldHyperlink:
-      description: 'This class extends `TemplateResponseDocumentFormFieldBase`'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/TemplateResponseDocumentFormFieldBase'
-        -
-          required:
-            - type
-          properties:
-            type:
-              description: |-
-                The type of this form field. See [field types](/api/reference/constants/#field-types).
-
-                * Text Field uses `TemplateResponseDocumentFormFieldText`
-                * Dropdown Field uses `TemplateResponseDocumentFormFieldDropdown`
-                * Hyperlink Field uses `TemplateResponseDocumentFormFieldHyperlink`
-                * Checkbox Field uses `TemplateResponseDocumentFormFieldCheckbox`
-                * Radio Field uses `TemplateResponseDocumentFormFieldRadio`
-                * Signature Field uses `TemplateResponseDocumentFormFieldSignature`
-                * Date Signed Field uses `TemplateResponseDocumentFormFieldDateSigned`
-                * Initials Field uses `TemplateResponseDocumentFormFieldInitials`
-              type: string
-              default: hyperlink
-            avg_text_length:
-              $ref: '#/components/schemas/TemplateResponseFieldAvgTextLength'
-            isMultiline:
-              description: 'Whether this form field is multiline text.'
-              type: boolean
-            originalFontSize:
-              description: 'Original font size used in this form field''s text.'
-              type: integer
-            fontFamily:
-              description: 'Font family used in this form field''s text.'
-              type: string
-          type: object
-    TemplateResponseDocumentFormFieldCheckbox:
-      description: 'This class extends `TemplateResponseDocumentFormFieldBase`'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/TemplateResponseDocumentFormFieldBase'
-        -
-          required:
-            - type
-          properties:
-            type:
-              description: |-
-                The type of this form field. See [field types](/api/reference/constants/#field-types).
-
-                * Text Field uses `TemplateResponseDocumentFormFieldText`
-                * Dropdown Field uses `TemplateResponseDocumentFormFieldDropdown`
-                * Hyperlink Field uses `TemplateResponseDocumentFormFieldHyperlink`
-                * Checkbox Field uses `TemplateResponseDocumentFormFieldCheckbox`
-                * Radio Field uses `TemplateResponseDocumentFormFieldRadio`
-                * Signature Field uses `TemplateResponseDocumentFormFieldSignature`
-                * Date Signed Field uses `TemplateResponseDocumentFormFieldDateSigned`
-                * Initials Field uses `TemplateResponseDocumentFormFieldInitials`
-              type: string
-              default: checkbox
-          type: object
-    TemplateResponseDocumentFormFieldRadio:
-      description: 'This class extends `TemplateResponseDocumentFormFieldBase`'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/TemplateResponseDocumentFormFieldBase'
-        -
-          required:
-            - type
-            - group
-          properties:
-            type:
-              description: |-
-                The type of this form field. See [field types](/api/reference/constants/#field-types).
-
-                * Text Field uses `TemplateResponseDocumentFormFieldText`
-                * Dropdown Field uses `TemplateResponseDocumentFormFieldDropdown`
-                * Hyperlink Field uses `TemplateResponseDocumentFormFieldHyperlink`
-                * Checkbox Field uses `TemplateResponseDocumentFormFieldCheckbox`
-                * Radio Field uses `TemplateResponseDocumentFormFieldRadio`
-                * Signature Field uses `TemplateResponseDocumentFormFieldSignature`
-                * Date Signed Field uses `TemplateResponseDocumentFormFieldDateSigned`
-                * Initials Field uses `TemplateResponseDocumentFormFieldInitials`
-              type: string
-              default: radio
-          type: object
-    TemplateResponseDocumentFormFieldSignature:
-      description: 'This class extends `TemplateResponseDocumentFormFieldBase`'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/TemplateResponseDocumentFormFieldBase'
-        -
-          required:
-            - type
-          properties:
-            type:
-              description: |-
-                The type of this form field. See [field types](/api/reference/constants/#field-types).
-
-                * Text Field uses `TemplateResponseDocumentFormFieldText`
-                * Dropdown Field uses `TemplateResponseDocumentFormFieldDropdown`
-                * Hyperlink Field uses `TemplateResponseDocumentFormFieldHyperlink`
-                * Checkbox Field uses `TemplateResponseDocumentFormFieldCheckbox`
-                * Radio Field uses `TemplateResponseDocumentFormFieldRadio`
-                * Signature Field uses `TemplateResponseDocumentFormFieldSignature`
-                * Date Signed Field uses `TemplateResponseDocumentFormFieldDateSigned`
-                * Initials Field uses `TemplateResponseDocumentFormFieldInitials`
-              type: string
-              default: signature
-          type: object
-    TemplateResponseDocumentFormFieldDateSigned:
-      description: 'This class extends `TemplateResponseDocumentFormFieldBase`'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/TemplateResponseDocumentFormFieldBase'
-        -
-          required:
-            - type
-          properties:
-            type:
-              description: |-
-                The type of this form field. See [field types](/api/reference/constants/#field-types).
-
-                * Text Field uses `TemplateResponseDocumentFormFieldText`
-                * Dropdown Field uses `TemplateResponseDocumentFormFieldDropdown`
-                * Hyperlink Field uses `TemplateResponseDocumentFormFieldHyperlink`
-                * Checkbox Field uses `TemplateResponseDocumentFormFieldCheckbox`
-                * Radio Field uses `TemplateResponseDocumentFormFieldRadio`
-                * Signature Field uses `TemplateResponseDocumentFormFieldSignature`
-                * Date Signed Field uses `TemplateResponseDocumentFormFieldDateSigned`
-                * Initials Field uses `TemplateResponseDocumentFormFieldInitials`
-              type: string
-              default: date_signed
-          type: object
-    TemplateResponseDocumentFormFieldInitials:
-      description: 'This class extends `TemplateResponseDocumentFormFieldBase`'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/TemplateResponseDocumentFormFieldBase'
-        -
-          required:
-            - type
-          properties:
-            type:
-              description: |-
-                The type of this form field. See [field types](/api/reference/constants/#field-types).
-
-                * Text Field uses `TemplateResponseDocumentFormFieldText`
-                * Dropdown Field uses `TemplateResponseDocumentFormFieldDropdown`
-                * Hyperlink Field uses `TemplateResponseDocumentFormFieldHyperlink`
-                * Checkbox Field uses `TemplateResponseDocumentFormFieldCheckbox`
-                * Radio Field uses `TemplateResponseDocumentFormFieldRadio`
-                * Signature Field uses `TemplateResponseDocumentFormFieldSignature`
-                * Date Signed Field uses `TemplateResponseDocumentFormFieldDateSigned`
-                * Initials Field uses `TemplateResponseDocumentFormFieldInitials`
-              type: string
-              default: initials
-          type: object
     TemplateResponseDocumentStaticFieldBase:
       description: 'An array describing static overlay fields. **Note** only available for certain subscriptions.'
       required:
@@ -10583,90 +10843,15 @@ components:
           initials: '#/components/schemas/TemplateResponseDocumentStaticFieldInitials'
       x-internal: true
       x-base-class: true
-    TemplateResponseDocumentStaticFieldText:
-      description: 'This class extends `TemplateResponseDocumentStaticFieldBase`'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/TemplateResponseDocumentStaticFieldBase'
-        -
-          required:
-            - type
-          properties:
-            type:
-              description: |-
-                The type of this static field. See [field types](/api/reference/constants/#field-types).
-
-                * Text Field uses `TemplateResponseDocumentStaticFieldText`
-                * Dropdown Field uses `TemplateResponseDocumentStaticFieldDropdown`
-                * Hyperlink Field uses `TemplateResponseDocumentStaticFieldHyperlink`
-                * Checkbox Field uses `TemplateResponseDocumentStaticFieldCheckbox`
-                * Radio Field uses `TemplateResponseDocumentStaticFieldRadio`
-                * Signature Field uses `TemplateResponseDocumentStaticFieldSignature`
-                * Date Signed Field uses `TemplateResponseDocumentStaticFieldDateSigned`
-                * Initials Field uses `TemplateResponseDocumentStaticFieldInitials`
-              type: string
-              default: text
-          type: object
-    TemplateResponseDocumentStaticFieldDropdown:
-      description: 'This class extends `TemplateResponseDocumentStaticFieldBase`'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/TemplateResponseDocumentStaticFieldBase'
-        -
-          required:
-            - type
-          properties:
-            type:
-              description: |-
-                The type of this static field. See [field types](/api/reference/constants/#field-types).
-
-                * Text Field uses `TemplateResponseDocumentStaticFieldText`
-                * Dropdown Field uses `TemplateResponseDocumentStaticFieldDropdown`
-                * Hyperlink Field uses `TemplateResponseDocumentStaticFieldHyperlink`
-                * Checkbox Field uses `TemplateResponseDocumentStaticFieldCheckbox`
-                * Radio Field uses `TemplateResponseDocumentStaticFieldRadio`
-                * Signature Field uses `TemplateResponseDocumentStaticFieldSignature`
-                * Date Signed Field uses `TemplateResponseDocumentStaticFieldDateSigned`
-                * Initials Field uses `TemplateResponseDocumentStaticFieldInitials`
-              type: string
-              default: dropdown
-          type: object
-    TemplateResponseDocumentStaticFieldHyperlink:
-      description: 'This class extends `TemplateResponseDocumentStaticFieldBase`'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/TemplateResponseDocumentStaticFieldBase'
-        -
-          required:
-            - type
-          properties:
-            type:
-              description: |-
-                The type of this static field. See [field types](/api/reference/constants/#field-types).
-
-                * Text Field uses `TemplateResponseDocumentStaticFieldText`
-                * Dropdown Field uses `TemplateResponseDocumentStaticFieldDropdown`
-                * Hyperlink Field uses `TemplateResponseDocumentStaticFieldHyperlink`
-                * Checkbox Field uses `TemplateResponseDocumentStaticFieldCheckbox`
-                * Radio Field uses `TemplateResponseDocumentStaticFieldRadio`
-                * Signature Field uses `TemplateResponseDocumentStaticFieldSignature`
-                * Date Signed Field uses `TemplateResponseDocumentStaticFieldDateSigned`
-                * Initials Field uses `TemplateResponseDocumentStaticFieldInitials`
-              type: string
-              default: hyperlink
-          type: object
     TemplateResponseDocumentStaticFieldCheckbox:
       description: 'This class extends `TemplateResponseDocumentStaticFieldBase`'
+      required:
+        - type
       type: object
       allOf:
         -
           $ref: '#/components/schemas/TemplateResponseDocumentStaticFieldBase'
         -
-          required:
-            - type
           properties:
             type:
               description: |-
@@ -10682,66 +10867,15 @@ components:
                 * Initials Field uses `TemplateResponseDocumentStaticFieldInitials`
               type: string
               default: checkbox
-          type: object
-    TemplateResponseDocumentStaticFieldRadio:
-      description: 'This class extends `TemplateResponseDocumentStaticFieldBase`'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/TemplateResponseDocumentStaticFieldBase'
-        -
-          required:
-            - type
-          properties:
-            type:
-              description: |-
-                The type of this static field. See [field types](/api/reference/constants/#field-types).
-
-                * Text Field uses `TemplateResponseDocumentStaticFieldText`
-                * Dropdown Field uses `TemplateResponseDocumentStaticFieldDropdown`
-                * Hyperlink Field uses `TemplateResponseDocumentStaticFieldHyperlink`
-                * Checkbox Field uses `TemplateResponseDocumentStaticFieldCheckbox`
-                * Radio Field uses `TemplateResponseDocumentStaticFieldRadio`
-                * Signature Field uses `TemplateResponseDocumentStaticFieldSignature`
-                * Date Signed Field uses `TemplateResponseDocumentStaticFieldDateSigned`
-                * Initials Field uses `TemplateResponseDocumentStaticFieldInitials`
-              type: string
-              default: radio
-          type: object
-    TemplateResponseDocumentStaticFieldSignature:
-      description: 'This class extends `TemplateResponseDocumentStaticFieldBase`'
-      type: object
-      allOf:
-        -
-          $ref: '#/components/schemas/TemplateResponseDocumentStaticFieldBase'
-        -
-          required:
-            - type
-          properties:
-            type:
-              description: |-
-                The type of this static field. See [field types](/api/reference/constants/#field-types).
-
-                * Text Field uses `TemplateResponseDocumentStaticFieldText`
-                * Dropdown Field uses `TemplateResponseDocumentStaticFieldDropdown`
-                * Hyperlink Field uses `TemplateResponseDocumentStaticFieldHyperlink`
-                * Checkbox Field uses `TemplateResponseDocumentStaticFieldCheckbox`
-                * Radio Field uses `TemplateResponseDocumentStaticFieldRadio`
-                * Signature Field uses `TemplateResponseDocumentStaticFieldSignature`
-                * Date Signed Field uses `TemplateResponseDocumentStaticFieldDateSigned`
-                * Initials Field uses `TemplateResponseDocumentStaticFieldInitials`
-              type: string
-              default: signature
-          type: object
     TemplateResponseDocumentStaticFieldDateSigned:
       description: 'This class extends `TemplateResponseDocumentStaticFieldBase`'
+      required:
+        - type
       type: object
       allOf:
         -
           $ref: '#/components/schemas/TemplateResponseDocumentStaticFieldBase'
         -
-          required:
-            - type
           properties:
             type:
               description: |-
@@ -10757,16 +10891,63 @@ components:
                 * Initials Field uses `TemplateResponseDocumentStaticFieldInitials`
               type: string
               default: date_signed
-          type: object
-    TemplateResponseDocumentStaticFieldInitials:
+    TemplateResponseDocumentStaticFieldDropdown:
       description: 'This class extends `TemplateResponseDocumentStaticFieldBase`'
+      required:
+        - type
       type: object
       allOf:
         -
           $ref: '#/components/schemas/TemplateResponseDocumentStaticFieldBase'
         -
-          required:
-            - type
+          properties:
+            type:
+              description: |-
+                The type of this static field. See [field types](/api/reference/constants/#field-types).
+
+                * Text Field uses `TemplateResponseDocumentStaticFieldText`
+                * Dropdown Field uses `TemplateResponseDocumentStaticFieldDropdown`
+                * Hyperlink Field uses `TemplateResponseDocumentStaticFieldHyperlink`
+                * Checkbox Field uses `TemplateResponseDocumentStaticFieldCheckbox`
+                * Radio Field uses `TemplateResponseDocumentStaticFieldRadio`
+                * Signature Field uses `TemplateResponseDocumentStaticFieldSignature`
+                * Date Signed Field uses `TemplateResponseDocumentStaticFieldDateSigned`
+                * Initials Field uses `TemplateResponseDocumentStaticFieldInitials`
+              type: string
+              default: dropdown
+    TemplateResponseDocumentStaticFieldHyperlink:
+      description: 'This class extends `TemplateResponseDocumentStaticFieldBase`'
+      required:
+        - type
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/TemplateResponseDocumentStaticFieldBase'
+        -
+          properties:
+            type:
+              description: |-
+                The type of this static field. See [field types](/api/reference/constants/#field-types).
+
+                * Text Field uses `TemplateResponseDocumentStaticFieldText`
+                * Dropdown Field uses `TemplateResponseDocumentStaticFieldDropdown`
+                * Hyperlink Field uses `TemplateResponseDocumentStaticFieldHyperlink`
+                * Checkbox Field uses `TemplateResponseDocumentStaticFieldCheckbox`
+                * Radio Field uses `TemplateResponseDocumentStaticFieldRadio`
+                * Signature Field uses `TemplateResponseDocumentStaticFieldSignature`
+                * Date Signed Field uses `TemplateResponseDocumentStaticFieldDateSigned`
+                * Initials Field uses `TemplateResponseDocumentStaticFieldInitials`
+              type: string
+              default: hyperlink
+    TemplateResponseDocumentStaticFieldInitials:
+      description: 'This class extends `TemplateResponseDocumentStaticFieldBase`'
+      required:
+        - type
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/TemplateResponseDocumentStaticFieldBase'
+        -
           properties:
             type:
               description: |-
@@ -10782,7 +10963,78 @@ components:
                 * Initials Field uses `TemplateResponseDocumentStaticFieldInitials`
               type: string
               default: initials
-          type: object
+    TemplateResponseDocumentStaticFieldRadio:
+      description: 'This class extends `TemplateResponseDocumentStaticFieldBase`'
+      required:
+        - type
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/TemplateResponseDocumentStaticFieldBase'
+        -
+          properties:
+            type:
+              description: |-
+                The type of this static field. See [field types](/api/reference/constants/#field-types).
+
+                * Text Field uses `TemplateResponseDocumentStaticFieldText`
+                * Dropdown Field uses `TemplateResponseDocumentStaticFieldDropdown`
+                * Hyperlink Field uses `TemplateResponseDocumentStaticFieldHyperlink`
+                * Checkbox Field uses `TemplateResponseDocumentStaticFieldCheckbox`
+                * Radio Field uses `TemplateResponseDocumentStaticFieldRadio`
+                * Signature Field uses `TemplateResponseDocumentStaticFieldSignature`
+                * Date Signed Field uses `TemplateResponseDocumentStaticFieldDateSigned`
+                * Initials Field uses `TemplateResponseDocumentStaticFieldInitials`
+              type: string
+              default: radio
+    TemplateResponseDocumentStaticFieldSignature:
+      description: 'This class extends `TemplateResponseDocumentStaticFieldBase`'
+      required:
+        - type
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/TemplateResponseDocumentStaticFieldBase'
+        -
+          properties:
+            type:
+              description: |-
+                The type of this static field. See [field types](/api/reference/constants/#field-types).
+
+                * Text Field uses `TemplateResponseDocumentStaticFieldText`
+                * Dropdown Field uses `TemplateResponseDocumentStaticFieldDropdown`
+                * Hyperlink Field uses `TemplateResponseDocumentStaticFieldHyperlink`
+                * Checkbox Field uses `TemplateResponseDocumentStaticFieldCheckbox`
+                * Radio Field uses `TemplateResponseDocumentStaticFieldRadio`
+                * Signature Field uses `TemplateResponseDocumentStaticFieldSignature`
+                * Date Signed Field uses `TemplateResponseDocumentStaticFieldDateSigned`
+                * Initials Field uses `TemplateResponseDocumentStaticFieldInitials`
+              type: string
+              default: signature
+    TemplateResponseDocumentStaticFieldText:
+      description: 'This class extends `TemplateResponseDocumentStaticFieldBase`'
+      required:
+        - type
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/TemplateResponseDocumentStaticFieldBase'
+        -
+          properties:
+            type:
+              description: |-
+                The type of this static field. See [field types](/api/reference/constants/#field-types).
+
+                * Text Field uses `TemplateResponseDocumentStaticFieldText`
+                * Dropdown Field uses `TemplateResponseDocumentStaticFieldDropdown`
+                * Hyperlink Field uses `TemplateResponseDocumentStaticFieldHyperlink`
+                * Checkbox Field uses `TemplateResponseDocumentStaticFieldCheckbox`
+                * Radio Field uses `TemplateResponseDocumentStaticFieldRadio`
+                * Signature Field uses `TemplateResponseDocumentStaticFieldSignature`
+                * Date Signed Field uses `TemplateResponseDocumentStaticFieldDateSigned`
+                * Initials Field uses `TemplateResponseDocumentStaticFieldInitials`
+              type: string
+              default: text
     TemplateResponseFieldAvgTextLength:
       description: 'Average text length in this field.'
       properties:
@@ -10802,6 +11054,20 @@ components:
         order:
           description: 'If signer order is assigned this is the 0-based index for this role.'
           type: integer
+      type: object
+      x-internal: true
+    TemplateUpdateFilesResponseTemplate:
+      description: 'Contains template id'
+      properties:
+        template_id:
+          description: 'The id of the Template.'
+          type: string
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+          deprecated: true
       type: object
       x-internal: true
     UnclaimedDraftResponse:
@@ -10831,17 +11097,6 @@ components:
           type: boolean
       type: object
       x-internal: true
-    UnclaimedDraftCreateResponse:
-      properties:
-        unclaimed_draft:
-          $ref: '#/components/schemas/UnclaimedDraftResponse'
-        warnings:
-          description: 'A list of warnings.'
-          type: array
-          items:
-            $ref: '#/components/schemas/WarningResponse'
-      type: object
-      x-internal: true
     WarningResponse:
       description: 'A list of warnings.'
       required:
@@ -10855,6 +11110,143 @@ components:
           description: 'Warning name'
           type: string
       type: object
+    TeamGetResponse:
+      properties:
+        team:
+          $ref: '#/components/schemas/TeamResponse'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    TeamGetInfoResponse:
+      properties:
+        team:
+          $ref: '#/components/schemas/TeamInfoResponse'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    TeamInvitesResponse:
+      properties:
+        team_invites:
+          description: 'Contains a list of team invites and their roles.'
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamInviteResponse'
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    TeamMembersResponse:
+      properties:
+        team_members:
+          description: 'Contains a list of team members and their roles for a specific team.'
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMemberResponse'
+        list_info:
+          $ref: '#/components/schemas/ListInfoResponse'
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    TeamSubTeamsResponse:
+      properties:
+        sub_teams:
+          description: 'Contains a list with sub teams.'
+          type: array
+          items:
+            $ref: '#/components/schemas/SubTeamResponse'
+        list_info:
+          $ref: '#/components/schemas/ListInfoResponse'
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    TemplateCreateResponse:
+      properties:
+        template:
+          $ref: '#/components/schemas/TemplateCreateResponse'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    TemplateCreateEmbeddedDraftResponse:
+      properties:
+        template:
+          $ref: '#/components/schemas/TemplateCreateEmbeddedDraftResponseTemplate'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    TemplateEditResponse:
+      properties:
+        template_id:
+          description: 'The id of the Template.'
+          type: string
+      type: object
+    TemplateGetResponse:
+      properties:
+        template:
+          $ref: '#/components/schemas/TemplateResponse'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    TemplateListResponse:
+      properties:
+        templates:
+          description: 'List of templates that the API caller has access to.'
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateResponse'
+        list_info:
+          $ref: '#/components/schemas/ListInfoResponse'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
+    TemplateUpdateFilesResponse:
+      properties:
+        template:
+          $ref: '#/components/schemas/TemplateUpdateFilesResponseTemplate'
+      type: object
+      x-internal: true
+    UnclaimedDraftCreateResponse:
+      properties:
+        unclaimed_draft:
+          $ref: '#/components/schemas/UnclaimedDraftResponse'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal: true
   responses:
     EventCallbackResponse:
       description: 'successful operation'
@@ -10972,6 +11364,22 @@ components:
       summary: 'Default Example'
       value:
         $ref: examples/json/TemplateAddUserRequestDefaultExample.json
+    TemplateCreateRequestDefaultExample:
+      summary: 'Default Example'
+      value:
+        $ref: examples/json/TemplateCreateRequestDefaultExample.json
+    TemplateCreateRequestFormFieldsPerDocumentExample:
+      summary: 'Form Fields Per Document Example'
+      value:
+        $ref: examples/json/TemplateCreateRequestFormFieldsPerDocumentExample.json
+    TemplateCreateRequestFormFieldGroupsExample:
+      summary: 'Form Fields Per Document and Groups Example'
+      value:
+        $ref: examples/json/TemplateCreateRequestFormFieldGroupsExample.json
+    TemplateCreateRequestFormFieldRulesExample:
+      summary: 'Form Fields Per Document and Rules Example'
+      value:
+        $ref: examples/json/TemplateCreateRequestFormFieldRulesExample.json
     TemplateCreateEmbeddedDraftRequestDefaultExample:
       summary: 'Default Example'
       value:
@@ -11036,10 +11444,6 @@ components:
       summary: 'Default Example'
       value:
         $ref: examples/json/UnclaimedDraftEditAndResendRequestDefaultExample.json
-    AccountGetResponseExample:
-      summary: 'Account Get'
-      value:
-        $ref: examples/json/AccountGetResponseExample.json
     AccountCreateResponseExample:
       summary: 'Account Create'
       value:
@@ -11048,10 +11452,10 @@ components:
       summary: 'Account Create with OAuth Authorization'
       value:
         $ref: examples/json/AccountCreateOAuthResponseExample.json
-    AccountUpdateResponseExample:
-      summary: 'Account Update'
+    AccountGetResponseExample:
+      summary: 'Account Get'
       value:
-        $ref: examples/json/AccountUpdateResponseExample.json
+        $ref: examples/json/AccountGetResponseExample.json
     AccountVerifyFoundResponseExample:
       summary: 'Account Found'
       value:
@@ -11060,10 +11464,6 @@ components:
       summary: 'Account Not Found'
       value:
         $ref: examples/json/AccountVerifyNotFoundResponseExample.json
-    ApiAppCreateResponseExample:
-      summary: 'API App'
-      value:
-        $ref: examples/json/ApiAppCreateResponseExample.json
     ApiAppGetResponseExample:
       summary: 'API App'
       value:
@@ -11072,10 +11472,6 @@ components:
       summary: 'API App List'
       value:
         $ref: examples/json/ApiAppListResponseExample.json
-    ApiAppUpdateResponseExample:
-      summary: 'API App Update'
-      value:
-        $ref: examples/json/ApiAppUpdateResponseExample.json
     BulkSendJobGetResponseExample:
       summary: 'Bulk Send Job'
       value:
@@ -11132,6 +11528,38 @@ components:
       summary: 'Error 4XX failed_operation'
       value:
         $ref: examples/json/Error4XXResponseExample.json
+    ReportCreateResponseExample:
+      summary: Report
+      value:
+        $ref: examples/json/ReportCreateResponseExample.json
+    SignatureRequestGetResponseExample:
+      summary: 'Get Signature Request'
+      value:
+        $ref: examples/json/SignatureRequestGetResponseExample.json
+    SignatureRequestListResponseExample:
+      summary: 'List Signature Requests'
+      value:
+        $ref: examples/json/SignatureRequestListResponseExample.json
+    AccountUpdateResponseExample:
+      summary: 'Account Update'
+      value:
+        $ref: examples/json/AccountUpdateResponseExample.json
+    OAuthTokenGenerateResponseExample:
+      summary: 'Retrieving the OAuth token'
+      value:
+        $ref: examples/json/OAuthTokenGenerateResponseExample.json
+    OAuthTokenRefreshResponseExample:
+      summary: 'Refresh an existing OAuth token'
+      value:
+        $ref: examples/json/OAuthTokenRefreshResponseExample.json
+    ApiAppCreateResponseExample:
+      summary: 'API App'
+      value:
+        $ref: examples/json/ApiAppCreateResponseExample.json
+    ApiAppUpdateResponseExample:
+      summary: 'API App Update'
+      value:
+        $ref: examples/json/ApiAppUpdateResponseExample.json
     EventCallbackAccountSignatureRequestSentExample:
       summary: 'Example: signature_request_sent'
       value:
@@ -11152,18 +11580,6 @@ components:
       summary: 'Example: template_created'
       value:
         $ref: examples/json/EventCallbackAppTemplateCreatedExample.json
-    OAuthTokenGenerateResponseExample:
-      summary: 'Retrieving the OAuth token'
-      value:
-        $ref: examples/json/OAuthTokenGenerateResponseExample.json
-    OAuthTokenRefreshResponseExample:
-      summary: 'Refresh an existing OAuth token'
-      value:
-        $ref: examples/json/OAuthTokenRefreshResponseExample.json
-    ReportCreateResponseExample:
-      summary: Report
-      value:
-        $ref: examples/json/ReportCreateResponseExample.json
     SignatureRequestCreateEmbeddedResponseExample:
       summary: 'Create Embedded Signature Request'
       value:
@@ -11172,18 +11588,10 @@ components:
       summary: 'Create Embedded Signature Request With Template'
       value:
         $ref: examples/json/SignatureRequestCreateEmbeddedWithTemplateResponseExample.json
-    SignatureRequestGetResponseExample:
-      summary: 'Get Signature Request'
-      value:
-        $ref: examples/json/SignatureRequestGetResponseExample.json
     SignatureRequestFilesResponseExample:
       summary: 'Signature Requests Files'
       value:
         $ref: examples/json/SignatureRequestFilesResponseExample.json
-    SignatureRequestListResponseExample:
-      summary: 'List Signature Requests'
-      value:
-        $ref: examples/json/SignatureRequestListResponseExample.json
     SignatureRequestReleaseHoldResponseExample:
       summary: 'Send Signature Release Hold'
       value:
@@ -11212,34 +11620,14 @@ components:
       summary: 'Bulk Send Create Embedded Signature Request With Template'
       value:
         $ref: examples/json/SignatureRequestBulkCreateEmbeddedWithTemplateResponseExample.json
-    TeamAddMemberResponseExample:
-      summary: 'Team Add Member'
-      value:
-        $ref: examples/json/TeamAddMemberResponseExample.json
     TeamCreateResponseExample:
       summary: 'Team Create'
       value:
         $ref: examples/json/TeamCreateResponseExample.json
-    TeamGetResponseExample:
-      summary: 'Team Get'
-      value:
-        $ref: examples/json/TeamGetResponseExample.json
-    TeamGetInfoResponseExample:
-      summary: 'Team Get Info'
-      value:
-        $ref: examples/json/TeamGetInfoResponseExample.json
-    TeamInvitesResponseExample:
-      summary: 'Team Invites'
-      value:
-        $ref: examples/json/TeamInvitesResponseExample.json
     TeamMembersResponseExample:
       summary: 'Team Members List'
       value:
         $ref: examples/json/TeamMembersResponseExample.json
-    TeamSubTeamsResponseExample:
-      summary: 'Team Sub Teams List'
-      value:
-        $ref: examples/json/TeamSubTeamsResponseExample.json
     TeamRemoveMemberResponseExample:
       summary: 'Team Remove Member'
       value:
@@ -11256,34 +11644,14 @@ components:
       summary: 'Add User to Template'
       value:
         $ref: examples/json/TemplateAddUserResponseExample.json
-    TemplateCreateEmbeddedDraftResponseExample:
-      summary: 'Create Embedded Draft Template'
-      value:
-        $ref: examples/json/TemplateCreateEmbeddedDraftResponseExample.json
     TemplateFilesResponseExample:
       summary: 'Template Files'
       value:
         $ref: examples/json/TemplateFilesResponseExample.json
-    TemplateGetResponseExample:
-      summary: 'Get Template'
-      value:
-        $ref: examples/json/TemplateGetResponseExample.json
-    TemplateListResponseExample:
-      summary: 'List Templates'
-      value:
-        $ref: examples/json/TemplateListResponseExample.json
     TemplateRemoveUserResponseExample:
       summary: 'Remove User from Template'
       value:
         $ref: examples/json/TemplateRemoveUserResponseExample.json
-    TemplateUpdateFilesResponseExample:
-      summary: 'Update Template Files'
-      value:
-        $ref: examples/json/TemplateUpdateFilesResponseExample.json
-    UnclaimedDraftCreateResponseExample:
-      summary: 'Unclaimed Draft Create'
-      value:
-        $ref: examples/json/UnclaimedDraftCreateResponseExample.json
     UnclaimedDraftCreateEmbeddedResponseExample:
       summary: 'Unclaimed Draft Create Embedded'
       value:
@@ -11296,6 +11664,50 @@ components:
       summary: 'Unclaimed Draft Edit and Resend'
       value:
         $ref: examples/json/UnclaimedDraftEditAndResendExample.json
+    TeamGetResponseExample:
+      summary: 'Team Get'
+      value:
+        $ref: examples/json/TeamGetResponseExample.json
+    TeamGetInfoResponseExample:
+      summary: 'Team Get Info'
+      value:
+        $ref: examples/json/TeamGetInfoResponseExample.json
+    TeamInvitesResponseExample:
+      summary: 'Team Invites'
+      value:
+        $ref: examples/json/TeamInvitesResponseExample.json
+    TeamAddMemberResponseExample:
+      summary: 'Team Add Member'
+      value:
+        $ref: examples/json/TeamAddMemberResponseExample.json
+    TeamSubTeamsResponseExample:
+      summary: 'Team Sub Teams List'
+      value:
+        $ref: examples/json/TeamSubTeamsResponseExample.json
+    TemplateCreateResponseExample:
+      summary: 'Create Template'
+      value:
+        $ref: examples/json/TemplateCreateResponseExample.json
+    TemplateCreateEmbeddedDraftResponseExample:
+      summary: 'Create Embedded Draft Template'
+      value:
+        $ref: examples/json/TemplateCreateEmbeddedDraftResponseExample.json
+    TemplateGetResponseExample:
+      summary: 'Get Template'
+      value:
+        $ref: examples/json/TemplateGetResponseExample.json
+    TemplateListResponseExample:
+      summary: 'List Templates'
+      value:
+        $ref: examples/json/TemplateListResponseExample.json
+    TemplateUpdateFilesResponseExample:
+      summary: 'Update Template Files'
+      value:
+        $ref: examples/json/TemplateUpdateFilesResponseExample.json
+    UnclaimedDraftCreateResponseExample:
+      summary: 'Unclaimed Draft Create'
+      value:
+        $ref: examples/json/UnclaimedDraftCreateResponseExample.json
   requestBodies:
     EventCallbackAccountRequest:
       description: |-
@@ -11331,19 +11743,19 @@ components:
       schema:
         type: integer
         format: int32
-      example: 100
+        example: 100
     X-RateLimit-Remaining:
       description: 'The number of requests remaining in the current rate limit window.'
       schema:
         type: integer
         format: int32
-      example: 99
+        example: 99
     X-Ratelimit-Reset:
       description: 'The Unix time at which the rate limit will reset to its maximum.'
       schema:
         type: integer
         format: int64
-      example: 1430170900
+        example: 1430170900
   securitySchemes:
     api_key:
       type: http

@@ -107,7 +107,9 @@
         "height": 30,
         "required": true,
         "signer": "1",
-        "page": 1
+        "page": 1,
+        "font_family": "roboto",
+        "font_size": 11
       },
       {
         "document_index": 0,
@@ -184,6 +186,7 @@
     ],
     "hide_text_tags": true,
     "is_qualified_signature": false,
+    "is_eid": false,
     "message": "Please sign this NDA and then we can discuss more. Let me know if you\nhave any questions.",
     "metadata": {
       "custom_id": 1234,
@@ -334,7 +337,9 @@
         "height": 30,
         "required": true,
         "signer": "1",
-        "page": 1
+        "page": 1,
+        "font_family": "roboto",
+        "font_size": 11
       },
       {
         "document_index": 0,
@@ -411,6 +416,7 @@
     ],
     "hide_text_tags": true,
     "is_qualified_signature": false,
+    "is_eid": false,
     "message": "Please sign this NDA and then we can discuss more. Let me know if you\nhave any questions.",
     "metadata": {
       "custom_id": 1234,
