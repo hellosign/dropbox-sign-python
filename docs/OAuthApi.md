@@ -2,8 +2,8 @@
 
 All URIs are relative to *https://api.hellosign.com/v3*
 
-|Method | HTTP request | Description|
-|------------- | ------------- | -------------|
+Method | HTTP request | Description
+------------- | ------------- | -------------
 |[```oauth_token_generate```](OAuthApi.md#oauth_token_generate) | ```POST /oauth/token``` | OAuth Token Generate|
 |[```oauth_token_refresh```](OAuthApi.md#oauth_token_refresh) | ```POST /oauth/token?refresh``` | OAuth Token Refresh|
 
@@ -27,7 +27,7 @@ from dropbox_sign import \
 configuration = Configuration()
 
 with ApiClient(configuration) as api_client:
-    api = apis.OAuthApi(api_client)
+    oauth_api = apis.OAuthApi(api_client)
 
     data = models.OAuthTokenGenerateRequest(
         state="900e06e2",
@@ -43,10 +43,9 @@ with ApiClient(configuration) as api_client:
         print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
-
+```
 
 ### Parameters
-
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | `o_auth_token_generate_request` | [**OAuthTokenGenerateRequest**](OAuthTokenGenerateRequest.md) |  |  |
@@ -63,7 +62,6 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: application/json
-
 
 ### HTTP response details
 
@@ -92,7 +90,7 @@ from dropbox_sign import \
 configuration = Configuration()
 
 with ApiClient(configuration) as api_client:
-    api = apis.OAuthApi(api_client)
+    oauth_api = apis.OAuthApi(api_client)
 
     data = models.OAuthTokenRefreshRequest(
         refresh_token="hNTI2MTFmM2VmZDQxZTZjOWRmZmFjZmVmMGMyNGFjMzI2MGI5YzgzNmE3",
@@ -105,10 +103,9 @@ with ApiClient(configuration) as api_client:
         print("Exception when calling Dropbox Sign API: %s\n" % e)
 
 ```
-
+```
 
 ### Parameters
-
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | `o_auth_token_refresh_request` | [**OAuthTokenRefreshRequest**](OAuthTokenRefreshRequest.md) |  |  |
@@ -125,7 +122,6 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: application/json
-
 
 ### HTTP response details
 
