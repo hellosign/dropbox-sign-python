@@ -117,7 +117,4 @@ with ApiClient(configuration) as api_client:
 
         pprint(response)
     except ApiException as e:
-        print(
-            "Exception when calling TemplateApi#template_create_embedded_draft: %s\n"
-            % e
-        )
+        print("Exception when calling TemplateApi#template_create_embedded_draft: %s\n" % e)

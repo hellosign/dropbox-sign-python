@@ -23,7 +23,4 @@ with ApiClient(configuration) as api_client:
 
         pprint(response)
     except ApiException as e:
-        print(
-            "Exception when calling SignatureRequestApi#signature_request_update: %s\n"
-            % e
-        )
+        print("Exception when calling SignatureRequestApi#signature_request_update: %s\n" % e)
