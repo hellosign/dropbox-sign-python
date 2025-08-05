@@ -7797,7 +7797,7 @@ components:
           type: array
           items:
             type: string
-          maxItems: 2
+          maxItems: 10
           minItems: 1
         name:
           description: 'The name you want to assign to the ApiApp.'
@@ -7823,7 +7823,7 @@ components:
           type: array
           items:
             type: string
-          maxItems: 2
+          maxItems: 10
         name:
           description: 'The name you want to assign to the ApiApp.'
           type: string
@@ -8112,10 +8112,10 @@ components:
           description: 'The token provided when you got the expired access token.'
           type: string
         client_id:
-          description: 'The client ID for your API app. Mandatory from August 1st, 2025. Until then, required if the "Client Credentials Required" setting is enabled for token refresh; optional if disabled.'
+          description: 'The client ID for your API app. Required for new API apps. To enhance security, we recommend making it required for existing apps in your app settings.'
           type: string
         client_secret:
-          description: 'The client secret for your API app. Mandatory from August 1st, 2025. Until then, required if the "Client Credentials Required" setting is enabled for token refresh; optional if disabled.'
+          description: 'The client secret for your API app. Required for new API apps. To enhance security, we recommend making it required for existing apps in your app settings.'
           type: string
       type: object
     ReportCreateRequest:
@@ -8135,6 +8135,7 @@ components:
             enum:
               - user_activity
               - document_status
+              - sms_activity
           maxItems: 2
           minItems: 1
         start_date:
@@ -11964,6 +11965,7 @@ components:
             enum:
               - user_activity
               - document_status
+              - sms_activity
       type: object
       x-internal-class: true
     SignatureRequestResponse:
@@ -13129,6 +13131,14 @@ components:
                 - social_security_number
                 - employer_identification_number
                 - custom_regex
+              nullable: true
+            validation_custom_regex:
+              description: 'When `validation_type` is set to `custom_regex`, this specifies the custom regular expression pattern that will be used to validate the text field.'
+              type: string
+              nullable: true
+            validation_custom_regex_format_label:
+              description: 'When `validation_type` is set to `custom_regex`, this specifies the error message displayed to the signer when the text does not match the provided regex pattern.'
+              type: string
               nullable: true
             group:
               description: 'The name of the group this field is in. If this field is not a group, this defaults to `null` except for Radio fields.'

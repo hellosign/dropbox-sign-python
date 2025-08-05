@@ -10,15 +10,13 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    unclaimed_draft_create_embedded_request = (
-        models.UnclaimedDraftCreateEmbeddedRequest(
-            client_id="b6b8e7deaf8f0b95c029dca049356d4a2cf9710a",
-            requester_email_address="jack@dropboxsign.com",
-            test_mode=True,
-            files=[
-                open("./example_signature_request.pdf", "rb").read(),
-            ],
-        )
+    unclaimed_draft_create_embedded_request = models.UnclaimedDraftCreateEmbeddedRequest(
+        client_id="b6b8e7deaf8f0b95c029dca049356d4a2cf9710a",
+        requester_email_address="jack@dropboxsign.com",
+        test_mode=True,
+        files=[
+            open("./example_signature_request.pdf", "rb").read(),
+        ],
     )
 
     try:
@@ -28,7 +26,4 @@ with ApiClient(configuration) as api_client:
 
         pprint(response)
     except ApiException as e:
-        print(
-            "Exception when calling UnclaimedDraftApi#unclaimed_draft_create_embedded: %s\n"
-            % e
-        )
+        print("Exception when calling UnclaimedDraftApi#unclaimed_draft_create_embedded: %s\n" % e)
