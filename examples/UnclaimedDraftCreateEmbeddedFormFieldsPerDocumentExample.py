@@ -45,14 +45,16 @@ with ApiClient(configuration) as api_client:
         form_fields_per_document_2,
     ]
 
-    unclaimed_draft_create_embedded_request = models.UnclaimedDraftCreateEmbeddedRequest(
-        client_id="b6b8e7deaf8f0b95c029dca049356d4a2cf9710a",
-        requester_email_address="jack@dropboxsign.com",
-        test_mode=False,
-        file_urls=[
-            "https://www.dropbox.com/s/ad9qnhbrjjn64tu/mutual-NDA-example.pdf?dl=1",
-        ],
-        form_fields_per_document=form_fields_per_document,
+    unclaimed_draft_create_embedded_request = (
+        models.UnclaimedDraftCreateEmbeddedRequest(
+            client_id="b6b8e7deaf8f0b95c029dca049356d4a2cf9710a",
+            requester_email_address="jack@dropboxsign.com",
+            test_mode=False,
+            file_urls=[
+                "https://www.dropbox.com/s/ad9qnhbrjjn64tu/mutual-NDA-example.pdf?dl=1",
+            ],
+            form_fields_per_document=form_fields_per_document,
+        )
     )
 
     try:
@@ -62,4 +64,7 @@ with ApiClient(configuration) as api_client:
 
         pprint(response)
     except ApiException as e:
-        print("Exception when calling UnclaimedDraftApi#unclaimed_draft_create_embedded: %s\n" % e)
+        print(
+            "Exception when calling UnclaimedDraftApi#unclaimed_draft_create_embedded: %s\n"
+            % e
+        )

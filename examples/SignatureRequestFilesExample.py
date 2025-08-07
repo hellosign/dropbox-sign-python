@@ -18,4 +18,7 @@ with ApiClient(configuration) as api_client:
 
         open("./file_response", "wb").write(response.read())
     except ApiException as e:
-        print("Exception when calling SignatureRequestApi#signature_request_files: %s\n" % e)
+        print(
+            "Exception when calling SignatureRequestApi#signature_request_files: %s\n"
+            % e
+        )

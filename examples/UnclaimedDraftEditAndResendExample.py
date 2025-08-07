@@ -23,4 +23,7 @@ with ApiClient(configuration) as api_client:
 
         pprint(response)
     except ApiException as e:
-        print("Exception when calling UnclaimedDraftApi#unclaimed_draft_edit_and_resend: %s\n" % e)
+        print(
+            "Exception when calling UnclaimedDraftApi#unclaimed_draft_edit_and_resend: %s\n"
+            % e
+        )

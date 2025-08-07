@@ -10,8 +10,7 @@ configuration = Configuration(
 )
 
 with ApiClient(configuration) as api_client:
-    merge_fields = [
-    ]
+    merge_fields = []
 
     embedded_edit_url_request = models.EmbeddedEditUrlRequest(
         cc_roles=[
