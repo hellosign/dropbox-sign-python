@@ -1,0 +1,35 @@
+{
+  "default": {
+    "name": "New Name",
+    "domains": [
+      "example.com"
+    ],
+    "callback_url": "https://example.com/dropboxsign",
+    "oauth": {
+      "callback_url": "https://example.com/oauth",
+      "scopes": [
+        "basic_account_info",
+        "request_signature"
+      ]
+    },
+    "options": {
+      "can_insert_everywhere": true
+    },
+    "white_labeling_options": {
+      "header_background_color": "#1A1A1A",
+      "legal_version": "terms1",
+      "link_color": "#0061FE",
+      "page_background_color": "#f7f8f9",
+      "primary_button_color": "#0061FE",
+      "primary_button_color_hover": "#0061FE",
+      "primary_button_text_color": "#ffffff",
+      "primary_button_text_color_hover": "#ffffff",
+      "secondary_button_color": "#ffffff",
+      "secondary_button_color_hover": "#ffffff",
+      "secondary_button_text_color": "#0061FE",
+      "secondary_button_text_color_hover": "#0061FE",
+      "text_color1": "#808080",
+      "text_color2": "#ffffff"
+    }
+  }
+}

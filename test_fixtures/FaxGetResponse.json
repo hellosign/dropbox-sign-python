@@ -1,0 +1,30 @@
+{
+  "default": {
+    "fax": {
+      "fax_id": "c2e9691c85d9d6fa6ae773842e3680b2b8650f1d",
+      "title": "example title",
+      "original_title": "example original title",
+      "subject": "example subject",
+      "message": "example message",
+      "metadata": {
+        "metadata_name_1": "metadata_value_1",
+        "metadata_name_2": {
+          "metadata_name_2_a": "metadata_value_2_a"
+        },
+        "metadata_name_3": "metadata_value_3",
+        "custom_id": 1234,
+        "custom_text": "NDA #9"
+      },
+      "created_at": 1726774555,
+      "sender": "me@dropboxsign.com",
+      "transmissions": [
+        {
+          "recipient": "recipient@dropboxsign.com",
+          "sent_at": 1723231831,
+          "status_code": "success"
+        }
+      ],
+      "files_url": "https://api.hellosign.com/v3/fax/files/2b388914e3ae3b738bd4e2ee2850c677e6dc53d2"
+    }
+  }
+}

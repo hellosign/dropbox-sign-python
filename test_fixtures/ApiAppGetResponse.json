@@ -1,0 +1,43 @@
+{
+  "default": {
+    "api_app": {
+      "client_id": "0dd3b823a682527788c4e40cb7b6f7e9",
+      "created_at": 1436232339,
+      "domains": ["example.com"],
+      "is_approved": false,
+      "name": "My Production App",
+      "oauth": {
+        "callback_url": "https://example.com/oauth",
+        "scopes": [
+          "basic_account_info",
+          "request_signature"
+        ],
+        "charges_users": false,
+        "secret": "98891a1b59f312d04cd88e4e0c498d75"
+      },
+      "options": {
+        "can_insert_everywhere": true
+      },
+      "owner_account": {
+        "account_id": "dc5deeb9e10b044c591ef2475aafad1d1d3bd888",
+        "email_address": "john@example.com"
+      },
+      "white_labeling_options": {
+        "header_background_color": "#1A1A1A",
+        "legal_version": "terms1",
+        "link_color": "#0061FE",
+        "page_background_color": "#f7f8f9",
+        "primary_button_color": "#0061FE",
+        "primary_button_color_hover": "#0061FE",
+        "primary_button_text_color": "#ffffff",
+        "primary_button_text_color_hover": "#ffffff",
+        "secondary_button_color": "#ffffff",
+        "secondary_button_color_hover": "#ffffff",
+        "secondary_button_text_color": "#0061FE",
+        "secondary_button_text_color_hover": "#0061FE",
+        "text_color1": "#808080",
+        "text_color2": "#ffffff"
+      }
+    }
+  }
+}
