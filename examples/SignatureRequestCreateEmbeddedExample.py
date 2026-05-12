@@ -16,6 +16,7 @@ with ApiClient(configuration) as api_client:
         phone=False,
         type=True,
         upload=True,
+        force_advanced_signature_details=False,
     )
 
     signers_1 = models.SubSignatureRequestSigner(
@@ -53,15 +54,10 @@ with ApiClient(configuration) as api_client:
     )
 
     try:
-        response = api.SignatureRequestApi(
-            api_client
-        ).signature_request_create_embedded(
+        response = api.SignatureRequestApi(api_client).signature_request_create_embedded(
             signature_request_create_embedded_request=signature_request_create_embedded_request,
         )
 
         pprint(response)
     except ApiException as e:
-        print(
-            "Exception when calling SignatureRequestApi#signature_request_create_embedded: %s\n"
-            % e
-        )
+        print("Exception when calling SignatureRequestApi#signature_request_create_embedded: %s\n" % e)

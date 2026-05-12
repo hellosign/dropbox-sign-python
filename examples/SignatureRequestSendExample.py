@@ -20,6 +20,7 @@ with ApiClient(configuration) as api_client:
         phone=False,
         type=True,
         upload=True,
+        force_advanced_signature_details=False,
     )
 
     signers_1 = models.SubSignatureRequestSigner(
@@ -51,14 +52,12 @@ with ApiClient(configuration) as api_client:
         files=[
             open("./example_signature_request.pdf", "rb").read(),
         ],
-        metadata=json.loads(
-            """
+        metadata=json.loads("""
             {
                 "custom_id": 1234,
                 "custom_text": "NDA #9"
             }
-        """
-        ),
+        """),
         field_options=field_options,
         signing_options=signing_options,
         signers=signers,
@@ -71,7 +70,4 @@ with ApiClient(configuration) as api_client:
 
         pprint(response)
     except ApiException as e:
-        print(
-            "Exception when calling SignatureRequestApi#signature_request_send: %s\n"
-            % e
-        )
+        print("Exception when calling SignatureRequestApi#signature_request_send: %s\n" % e)

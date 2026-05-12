@@ -16,6 +16,7 @@ with ApiClient(configuration) as api_client:
         phone=False,
         type=True,
         upload=True,
+        force_advanced_signature_details=False,
     )
 
     signers_1 = models.SubSignatureRequestTemplateSigner(
@@ -48,31 +49,24 @@ with ApiClient(configuration) as api_client:
         custom_fields_1,
     ]
 
-    signature_request_send_with_template_request = (
-        models.SignatureRequestSendWithTemplateRequest(
-            template_ids=[
-                "61a832ff0d8423f91d503e76bfbcc750f7417c78",
-            ],
-            message="Glad we could come to an agreement.",
-            subject="Purchase Order",
-            test_mode=True,
-            signing_options=signing_options,
-            signers=signers,
-            ccs=ccs,
-            custom_fields=custom_fields,
-        )
+    signature_request_send_with_template_request = models.SignatureRequestSendWithTemplateRequest(
+        template_ids=[
+            "61a832ff0d8423f91d503e76bfbcc750f7417c78",
+        ],
+        message="Glad we could come to an agreement.",
+        subject="Purchase Order",
+        test_mode=True,
+        signing_options=signing_options,
+        signers=signers,
+        ccs=ccs,
+        custom_fields=custom_fields,
     )
 
     try:
-        response = api.SignatureRequestApi(
-            api_client
-        ).signature_request_send_with_template(
+        response = api.SignatureRequestApi(api_client).signature_request_send_with_template(
             signature_request_send_with_template_request=signature_request_send_with_template_request,
         )
 
         pprint(response)
     except ApiException as e:
-        print(
-            "Exception when calling SignatureRequestApi#signature_request_send_with_template: %s\n"
-            % e
-        )
+        print("Exception when calling SignatureRequestApi#signature_request_send_with_template: %s\n" % e)
