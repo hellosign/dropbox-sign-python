@@ -42,53 +42,18 @@ jobs:
       - name: Ensure no changes in Generated Code
         run: ./bin/check-clean-git-status
 
-  # This job runs on pull requests
-  # Publishes to test.pypi.org, useful as a dry run
-  # Step still passes even if package version was already uploaded
-  publish-test:
-    runs-on: ubuntu-latest
-    if: >-
-      github.repository == 'hellosign/dropbox-sign-python'
-      && github.ref != 'refs/heads/main'
-      && github.event_name == 'pull_request'
-    needs: [ build ]
-    permissions:
-      id-token: write
-      contents: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.10"
-
-      - name: Install pypa/build
-        run: python -m pip install build --user
-
-      - name: Build a binary wheel and a source tarball
-        run: python -m build --sdist --wheel --outdir dist/ .
-
-      - name: Publish distribution to Test PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          repository-url: https://test.pypi.org/legacy/
-          skip-existing: true
-          verbose: true
-
   # This job runs on merging to "main" branch
-  # Builds and publishes package to pypi.org
+  # Builds and publishes package to pypi.org with trusted publishing
   publish-prod:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     if: >-
       github.repository == 'hellosign/dropbox-sign-python'
       && github.ref == 'refs/heads/main'
       && github.event_name != 'pull_request'
     needs: [ build ]
-    permissions:
-      id-token: write
-      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -104,7 +69,7 @@ jobs:
       - name: Build a binary wheel and a source tarball
         run: python -m build --sdist --wheel --outdir dist/ .
 
-      - name: Publish distribution to PyPI
+      - name: Publish package with trusted publishing
         uses: pypa/gh-action-pypi-publish@release/v1
 
   # This job runs on merging to "main" branch
