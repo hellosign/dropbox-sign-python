@@ -1153,6 +1153,104 @@ paths:
         seo:
           title: 'List Bulk Send Jobs | Documentation | Dropbox Sign for Developers'
           description: 'The Dropbox Sign API allows you to build custom integrations. To find out how to return a list of BulkSendJob that you can access, click here.'
+  /document/detect_fields:
+    post:
+      tags:
+        - Document
+      summary: 'Detect Document Fields'
+      description: 'Detects form fields in a PDF document using either PDF form annotations or Dropbox Sign text tags.'
+      operationId: documentDetectFields
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocumentFieldDetectionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DocumentFieldDetectionRequest'
+      responses:
+        '200':
+          description: 'successful operation'
+          headers:
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/X-RateLimit-Limit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/X-RateLimit-Remaining'
+            X-Ratelimit-Reset:
+              $ref: '#/components/headers/X-Ratelimit-Reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentFieldDetectionResponse'
+        '4XX':
+          description: failed_operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                400_example:
+                  $ref: '#/components/examples/Error400Response'
+                401_example:
+                  $ref: '#/components/examples/Error401Response'
+                402_example:
+                  $ref: '#/components/examples/Error402Response'
+                403_example:
+                  $ref: '#/components/examples/Error403Response'
+                429_example:
+                  $ref: '#/components/examples/Error429Response'
+                422_example:
+                  $ref: '#/components/examples/Error422Response'
+                4XX_example:
+                  $ref: '#/components/examples/Error4XXResponse'
+      security:
+        -
+          api_key: []
+        -
+          oauth2:
+            - request_signature
+            - signature_request_access
+      x-codeSamples:
+        -
+          lang: PHP
+          label: PHP
+          source:
+            $ref: examples/DocumentDetectFieldsExample.php
+        -
+          lang: 'C#'
+          label: 'C#'
+          source:
+            $ref: examples/DocumentDetectFieldsExample.cs
+        -
+          lang: TypeScript
+          label: TypeScript
+          source:
+            $ref: examples/DocumentDetectFieldsExample.ts
+        -
+          lang: Java
+          label: Java
+          source:
+            $ref: examples/DocumentDetectFieldsExample.java
+        -
+          lang: Ruby
+          label: Ruby
+          source:
+            $ref: examples/DocumentDetectFieldsExample.rb
+        -
+          lang: Python
+          label: Python
+          source:
+            $ref: examples/DocumentDetectFieldsExample.py
+        -
+          lang: cURL
+          label: cURL
+          source:
+            $ref: examples/DocumentDetectFieldsExample.sh
+      x-meta:
+        seo:
+          title: 'Detect Document Fields | API Documentation | Dropbox Sign for Developers'
+          description: 'Use the Dropbox Sign API to detect form fields in PDF documents from PDF form annotations or Dropbox Sign text tags.'
   '/embedded/edit_url/{template_id}':
     post:
       tags:
@@ -5087,6 +5185,8 @@ paths:
                   $ref: '#/components/examples/Error429Response'
                 404_example:
                   $ref: '#/components/examples/Error404Response'
+                409_example:
+                  $ref: '#/components/examples/Error409Response'
                 4XX_example:
                   $ref: '#/components/examples/Error4XXResponse'
       security:
@@ -7925,6 +8025,42 @@ components:
         white_labeling_options:
           $ref: '#/components/schemas/SubWhiteLabelingOptions'
       type: object
+    DocumentFieldDetectionRequest:
+      required:
+        - detection_mode
+      properties:
+        file:
+          description: |-
+            The PDF file to analyze.
+
+            This endpoint requires either `file` or `file_url`, but not both.
+          type: string
+          format: binary
+        file_url:
+          description: |-
+            The URL of the PDF file to analyze.
+
+            This endpoint requires either `file` or `file_url`, but not both.
+          type: string
+          format: uri
+        detection_mode:
+          description: 'The field detection method to use. Set to `annotations` to detect PDF form annotations or `text_tags` to detect Dropbox Sign text tags.'
+          type: string
+          oneOf:
+            -
+              type: string
+              pattern: ^annotations$
+              example: annotations
+            -
+              type: string
+              pattern: ^text_tags$
+              example: text_tags
+        page_range:
+          description: 'The zero-based page indexes to analyze. Accepts `all`, individual pages, inclusive ranges, or comma-separated combinations, such as `0-2,5,7-9`. Defaults to `all`.'
+          type: string
+          pattern: '^(?:all|\d+(?:-\d+)?(?:,\d+(?:-\d+)?)*)$'
+          example: '0-2,5,7-9'
+      type: object
     EmbeddedEditUrlRequest:
       properties:
         allow_edit_ccs:
@@ -8323,6 +8459,10 @@ components:
           description: 'The title you want to assign to the SignatureRequest.'
           type: string
           maxLength: 255
+        expires_at:
+          description: 'When the signature request will expire. Unsigned signatures will be moved to the expired status, and no longer signable. See [Signature Request Expiration Date](https://developers.hellosign.com/docs/signature-request/expiration/) for details.'
+          type: integer
+          nullable: true
       type: object
     SignatureRequestBulkSendWithTemplateRequest:
       required:
@@ -8412,6 +8552,10 @@ components:
           description: 'The title you want to assign to the SignatureRequest.'
           type: string
           maxLength: 255
+        expires_at:
+          description: 'When the signature request will expire. Unsigned signatures will be moved to the expired status, and no longer signable. See [Signature Request Expiration Date](https://developers.hellosign.com/docs/signature-request/expiration/) for details.'
+          type: integer
+          nullable: true
       type: object
     SignatureRequestCreateEmbeddedRequest:
       required:
@@ -8652,6 +8796,10 @@ components:
             **NOTE:** Keep your signer's information safe by ensuring that the _signer on your signature request is the intended party_ before using this feature.
           type: boolean
           default: false
+        expires_at:
+          description: 'When the signature request will expire. Unsigned signatures will be moved to the expired status, and no longer signable. See [Signature Request Expiration Date](https://developers.hellosign.com/docs/signature-request/expiration/) for details.'
+          type: integer
+          nullable: true
       type: object
     SignatureRequestEditRequest:
       properties:
@@ -9416,6 +9564,10 @@ components:
           description: 'The title you want to assign to the SignatureRequest.'
           type: string
           maxLength: 255
+        expires_at:
+          description: 'When the signature request will expire. Unsigned signatures will be moved to the expired status, and no longer signable. See [Signature Request Expiration Date](https://developers.hellosign.com/docs/signature-request/expiration/) for details.'
+          type: integer
+          nullable: true
       type: object
     SignatureRequestUpdateRequest:
       required:
@@ -11520,6 +11672,19 @@ components:
             $ref: '#/components/schemas/WarningResponse'
       type: object
       x-internal-class: true
+    DocumentFieldDetectionResponse:
+      required:
+        - detection_result
+      properties:
+        detection_result:
+          $ref: '#/components/schemas/DocumentFieldDetectionResponseDetectionResult'
+        warnings:
+          description: 'A list of warnings.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+      type: object
+      x-internal-class: true
     EmbeddedEditUrlResponse:
       required:
         - embedded
@@ -11940,6 +12105,89 @@ components:
               type: object
               additionalProperties: {}
       x-internal-class: true
+    DocumentFieldDetectionResponseDetectionResult:
+      required:
+        - document_hash
+        - detection_mode
+        - page_count
+        - pages_analyzed
+        - detected_at
+        - form_fields_per_document
+        - form_field_groups
+        - warnings
+        - errors
+        - suggestions
+      properties:
+        document_hash:
+          description: 'The SHA-256 hash of the analyzed document.'
+          type: string
+          maxLength: 64
+          minLength: 64
+        detection_mode:
+          description: 'The field detection method used to analyze the document: `annotations` or `text_tags`.'
+          type: string
+          oneOf:
+            -
+              type: string
+              pattern: ^annotations$
+              example: annotations
+            -
+              type: string
+              pattern: ^text_tags$
+              example: text_tags
+        page_count:
+          description: 'The total number of pages in the document.'
+          type: integer
+          minimum: 0
+        pages_analyzed:
+          description: 'The zero-based page indexes analyzed, represented by the requested `page_range`, or `all` when every page was analyzed.'
+          type: string
+          example: all
+        detected_at:
+          description: 'The Unix timestamp when the field detection result was generated.'
+          type: integer
+          format: int64
+        form_fields_per_document:
+          description: |-
+            The fields that should appear on the document, expressed as an array of objects. (For more details you can read about it here: [Using Form Fields per Document](/docs/openapi/form-fields-per-document).)
+
+            **NOTE:** Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.
+
+            * Text Field use `SubFormFieldsPerDocumentText`
+            * Dropdown Field use `SubFormFieldsPerDocumentDropdown`
+            * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink`
+            * Checkbox Field use `SubFormFieldsPerDocumentCheckbox`
+            * Radio Field use `SubFormFieldsPerDocumentRadio`
+            * Signature Field use `SubFormFieldsPerDocumentSignature`
+            * Date Signed Field use `SubFormFieldsPerDocumentDateSigned`
+            * Initials Field use `SubFormFieldsPerDocumentInitials`
+            * Text Merge Field use `SubFormFieldsPerDocumentTextMerge`
+            * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`
+          type: array
+          items:
+            $ref: '#/components/schemas/SubFormFieldsPerDocumentBase'
+        form_field_groups:
+          description: 'Group information for fields defined in `form_fields_per_document`. String-indexed JSON array with `group_label` and `requirement` keys. `form_fields_per_document` must contain fields referencing a group defined in `form_field_groups`.'
+          type: array
+          items:
+            $ref: '#/components/schemas/SubFormFieldGroup'
+        warnings:
+          description: 'Non-fatal issues encountered during field detection.'
+          type: array
+          items:
+            $ref: '#/components/schemas/WarningResponse'
+        errors:
+          description: 'Errors encountered during field detection. Successfully detected fields may still be included in the response.'
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorResponseError'
+        suggestions:
+          description: 'Suggestions for improving the field detection results.'
+          type: array
+          items:
+            type: string
+      type: object
+      x-internal-class: true
     EmbeddedEditUrlResponseEmbedded:
       description: 'An embedded template object.'
       properties:
@@ -11975,7 +12223,7 @@ components:
           description: 'Path at which an error occurred.'
           type: string
         error_name:
-          description: 'Name of the error.'
+          description: 'Name of the error. See the `x-error-codes` catalog in openapi file for a complete list of possible error codes with detailed information including HTTP status codes, causes, remediation steps, and retry guidance.'
           type: string
       type: object
     FaxResponse:
@@ -11988,6 +12236,7 @@ components:
         - sender
         - files_url
         - transmissions
+        - test_mode
       properties:
         fax_id:
           description: 'Fax ID'
@@ -12028,6 +12277,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FaxResponseTransmission'
+        test_mode:
+          description: 'Whether this is a test fax. Test faxes are not delivered to the recipient. Defaults to `false`.'
+          type: boolean
+          default: false
       type: object
       x-internal-class: true
     FaxLineResponseFaxLine:
@@ -13782,6 +14035,8 @@ components:
         template:
           $ref: '#/components/schemas/TemplateResponse'
       type: object
+      x-fern-audiences:
+        - events
     EventCallbackRequestEvent:
       description: 'Basic information about the event that occurred.'
       required:
@@ -13819,12 +14074,21 @@ components:
             - template_error
             - callback_test
             - signature_request_signer_removed
+            - fax_received
+            - fax_sent
+            - fax_on_hold
+            - fax_busy
+            - fax_no_answer
+            - fax_disconnected
+            - fax_blacklisted
         event_hash:
           description: 'Generated hash used to verify source of event data.'
           type: string
         event_metadata:
           $ref: '#/components/schemas/EventCallbackRequestEventMetadata'
       type: object
+      x-fern-audiences:
+        - events
     EventCallbackRequestEventMetadata:
       description: 'Specific metadata about the event.'
       properties:
@@ -13845,6 +14109,8 @@ components:
           type: string
           nullable: true
       type: object
+      x-fern-audiences:
+        - events
   responses:
     EventCallbackResponse:
       description: 'successful operation'
@@ -13853,6 +14119,8 @@ components:
           schema:
             type: string
             default: 'Hello API Event Received'
+      x-fern-audiences:
+        - events
   examples:
     AccountCreateRequest:
       summary: 'Default Example'
@@ -14354,22 +14622,212 @@ components:
       summary: 'Example: signature_request_sent'
       value:
         $ref: examples/json/EventCallbackAccountSignatureRequestSent.json
+      x-fern-audiences:
+        - events
     EventCallbackAccountTemplateCreated:
       summary: 'Example: template_created'
       value:
         $ref: examples/json/EventCallbackAccountTemplateCreated.json
+      x-fern-audiences:
+        - events
     EventCallbackAppAccountConfirmed:
       summary: 'Example: account_confirmed'
       value:
         $ref: examples/json/EventCallbackAppAccountConfirmed.json
+      x-fern-audiences:
+        - events
     EventCallbackAppSignatureRequestSent:
       summary: 'Example: signature_request_sent'
       value:
         $ref: examples/json/EventCallbackAppSignatureRequestSent.json
+      x-fern-audiences:
+        - events
     EventCallbackAppTemplateCreated:
       summary: 'Example: template_created'
       value:
         $ref: examples/json/EventCallbackAppTemplateCreated.json
+      x-fern-audiences:
+        - events
+    EventCallbackSignatureRequestViewed:
+      summary: 'Signature Request Viewed Event Example'
+      value:
+        $ref: examples/json/EventCallbackSignatureRequestViewed.json
+      x-fern-audiences:
+        - events
+    EventCallbackSignatureRequestSigned:
+      summary: 'Signature Request Signed Event Example'
+      value:
+        $ref: examples/json/EventCallbackSignatureRequestSigned.json
+      x-fern-audiences:
+        - events
+    EventCallbackSignatureRequestSignerRemoved:
+      summary: 'Signature Request Signer Removed Event Example'
+      value:
+        $ref: examples/json/EventCallbackSignatureRequestSignerRemoved.json
+      x-fern-audiences:
+        - events
+    EventCallbackSignatureRequestDownloadable:
+      summary: 'Signature Request Downloadable Event Example'
+      value:
+        $ref: examples/json/EventCallbackSignatureRequestDownloadable.json
+      x-fern-audiences:
+        - events
+    EventCallbackSignatureRequestSent:
+      summary: 'Signature Request Sent Event Example'
+      value:
+        $ref: examples/json/EventCallbackSignatureRequestSent.json
+      x-fern-audiences:
+        - events
+    EventCallbackSignatureRequestAllSigned:
+      summary: 'Signature Request All Signed Event Example'
+      value:
+        $ref: examples/json/EventCallbackSignatureRequestAllSigned.json
+      x-fern-audiences:
+        - events
+    EventCallbackSignatureRequestInvalid:
+      summary: 'Signature Request Invalid Event Example'
+      value:
+        $ref: examples/json/EventCallbackSignatureRequestInvalid.json
+      x-fern-audiences:
+        - events
+    EventCallbackSignatureRequestEmailBounce:
+      summary: 'Signature Request Email Bounce Event Example'
+      value:
+        $ref: examples/json/EventCallbackSignatureRequestEmailBounce.json
+      x-fern-audiences:
+        - events
+    EventCallbackSignatureRequestRemind:
+      summary: 'Signature Request Remind Event Example'
+      value:
+        $ref: examples/json/EventCallbackSignatureRequestRemind.json
+      x-fern-audiences:
+        - events
+    EventCallbackSignatureRequestIncompleteQes:
+      summary: 'Signature Request Incomplete QES Event Example'
+      value:
+        $ref: examples/json/EventCallbackSignatureRequestIncompleteQes.json
+      x-fern-audiences:
+        - events
+    EventCallbackSignatureRequestDestroyed:
+      summary: 'Signature Request Destroyed Event Example'
+      value:
+        $ref: examples/json/EventCallbackSignatureRequestDestroyed.json
+      x-fern-audiences:
+        - events
+    EventCallbackSignatureRequestCanceled:
+      summary: 'Signature Request Canceled Event Example'
+      value:
+        $ref: examples/json/EventCallbackSignatureRequestCanceled.json
+      x-fern-audiences:
+        - events
+    EventCallbackSignatureRequestDeclined:
+      summary: 'Signature Request Declined Event Example'
+      value:
+        $ref: examples/json/EventCallbackSignatureRequestDeclined.json
+      x-fern-audiences:
+        - events
+    EventCallbackSignatureRequestExpired:
+      summary: 'Signature Request Expired Event Example'
+      value:
+        $ref: examples/json/EventCallbackSignatureRequestExpired.json
+      x-fern-audiences:
+        - events
+    EventCallbackSignatureRequestReassigned:
+      summary: 'Signature Request Reassigned Event Example'
+      value:
+        $ref: examples/json/EventCallbackSignatureRequestReassigned.json
+      x-fern-audiences:
+        - events
+    EventCallbackSignatureRequestPrepared:
+      summary: 'Signature Request Prepared Event Example'
+      value:
+        $ref: examples/json/EventCallbackSignatureRequestPrepared.json
+      x-fern-audiences:
+        - events
+    EventCallbackAccountConfirmed:
+      summary: 'Account Confirmed Event Example'
+      value:
+        $ref: examples/json/EventCallbackAccountConfirmed.json
+      x-fern-audiences:
+        - events
+    EventCallbackUnknownError:
+      summary: 'Unknown Error Event Example'
+      value:
+        $ref: examples/json/EventCallbackUnknownError.json
+      x-fern-audiences:
+        - events
+    EventCallbackFileError:
+      summary: 'File Error Event Example'
+      value:
+        $ref: examples/json/EventCallbackFileError.json
+      x-fern-audiences:
+        - events
+    EventCallbackTemplateCreated:
+      summary: 'Template Created Event Example'
+      value:
+        $ref: examples/json/EventCallbackTemplateCreated.json
+      x-fern-audiences:
+        - events
+    EventCallbackTemplateError:
+      summary: 'Template Error Event Example'
+      value:
+        $ref: examples/json/EventCallbackTemplateError.json
+      x-fern-audiences:
+        - events
+    EventCallbackSignUrlInvalid:
+      summary: 'Sign URL Invalid Event Example'
+      value:
+        $ref: examples/json/EventCallbackSignUrlInvalid.json
+      x-fern-audiences:
+        - events
+    EventCallbackCallbackTest:
+      summary: 'Callback Test Event Example'
+      value:
+        $ref: examples/json/EventCallbackCallbackTest.json
+      x-fern-audiences:
+        - events
+    EventCallbackFaxReceived:
+      summary: 'Fax Received Event Example'
+      value:
+        $ref: examples/json/EventCallbackFaxReceived.json
+      x-fern-audiences:
+        - events
+    EventCallbackFaxSent:
+      summary: 'Fax Sent Event Example'
+      value:
+        $ref: examples/json/EventCallbackFaxSent.json
+      x-fern-audiences:
+        - events
+    EventCallbackFaxOnHold:
+      summary: 'Fax On Hold Event Example'
+      value:
+        $ref: examples/json/EventCallbackFaxOnHold.json
+      x-fern-audiences:
+        - events
+    EventCallbackFaxBusy:
+      summary: 'Fax Busy Event Example'
+      value:
+        $ref: examples/json/EventCallbackFaxBusy.json
+      x-fern-audiences:
+        - events
+    EventCallbackFaxNoAnswer:
+      summary: 'Fax No Answer Event Example'
+      value:
+        $ref: examples/json/EventCallbackFaxNoAnswer.json
+      x-fern-audiences:
+        - events
+    EventCallbackFaxDisconnected:
+      summary: 'Fax Disconnected Event Example'
+      value:
+        $ref: examples/json/EventCallbackFaxDisconnected.json
+      x-fern-audiences:
+        - events
+    EventCallbackFaxBlacklisted:
+      summary: 'Fax Blacklisted Event Example'
+      value:
+        $ref: examples/json/EventCallbackFaxBlacklisted.json
+      x-fern-audiences:
+        - events
   requestBodies:
     EventCallbackAccountRequest:
       description: |-
@@ -14447,100 +14905,242 @@ security:
 externalDocs:
   description: 'Legacy API Reference'
   url: 'https://app.hellosign.com/api/reference'
-x-webhooks:
-  accountCallback:
-    post:
-      summary: 'Account Callbacks'
-      operationId: accountUpdateEventCallback
-      description:
-        $ref: ./markdown/en/descriptions/account-callback-description.md
-      x-meta:
-        seo:
-          title: 'Account Callbacks | API Documentation | Dropbox Sign for Developers'
-          description: 'The Dropbox Sign API allows you to build with a wide range of tools. To find out how to consume Dropbox Sign Events at the account level, click here.'
-      x-codeSamples:
-        -
-          lang: PHP
-          label: PHP
-          source:
-            $ref: examples/EventCallbackExample.php
-        -
-          lang: 'C#'
-          label: 'C#'
-          source:
-            $ref: examples/EventCallbackExample.cs
-        -
-          lang: TypeScript
-          label: TypeScript
-          source:
-            $ref: examples/EventCallbackExample.ts
-        -
-          lang: Java
-          label: Java
-          source:
-            $ref: examples/EventCallbackExample.java
-        -
-          lang: Ruby
-          label: Ruby
-          source:
-            $ref: examples/EventCallbackExample.rb
-        -
-          lang: Python
-          label: Python
-          source:
-            $ref: examples/EventCallbackExample.py
-      tags:
-        - 'Callbacks and Events'
-      requestBody:
-        $ref: '#/components/requestBodies/EventCallbackAccountRequest'
-      responses:
-        200:
-          $ref: '#/components/responses/EventCallbackResponse'
-  appCallback:
-    post:
-      summary: 'App Callbacks'
-      description:
-        $ref: ./markdown/en/descriptions/api-app-callback-description.md
-      operationId: apiAppCreateEventCallback
-      x-meta:
-        seo:
-          title: 'App Callbacks | API Documentation | Dropbox Sign for Developers'
-          description: 'The Dropbox Sign API allows you to build with a wide range of tools. To find out how to consume Dropbox Sign Events at the App level, click here.'
-      x-codeSamples:
-        -
-          lang: PHP
-          label: PHP
-          source:
-            $ref: examples/EventCallbackExample.php
-        -
-          lang: 'C#'
-          label: 'C#'
-          source:
-            $ref: examples/EventCallbackExample.cs
-        -
-          lang: TypeScript
-          label: TypeScript
-          source:
-            $ref: examples/EventCallbackExample.ts
-        -
-          lang: Java
-          label: Java
-          source:
-            $ref: examples/EventCallbackExample.java
-        -
-          lang: Ruby
-          label: Ruby
-          source:
-            $ref: examples/EventCallbackExample.rb
-        -
-          lang: Python
-          label: Python
-          source:
-            $ref: examples/EventCallbackExample.py
-      tags:
-        - 'Callbacks and Events'
-      requestBody:
-        $ref: '#/components/requestBodies/EventCallbackAppRequest'
-      responses:
-        200:
-          $ref: '#/components/responses/EventCallbackResponse'
+x-webhooks: []
+x-error-codes:
+  bad_request:
+    http_status: 400
+    summary: 'The request contained invalid or malformed parameters.'
+    cause: 'A parameter failed validation, or the request body was malformed.'
+    remediation: 'Inspect error_msg and error_path, correct the offending parameter, and resend.'
+    retryable: 'no'
+  unauthorized:
+    http_status: 401
+    summary: 'The credentials supplied are missing or invalid.'
+    cause: 'Missing, malformed, or invalid API key or OAuth access token.'
+    remediation: 'Verify the API key or OAuth token and the Authorization header, then retry.'
+    retryable: 'no'
+  payment_required:
+    http_status: 402
+    summary: 'The account must be credited or upgraded to perform this action.'
+    cause: 'The action requires a paid plan, additional quota, or API credits.'
+    remediation: 'Upgrade the plan or add the required credits/quota, then retry.'
+    retryable: 'no'
+  forbidden:
+    http_status: 403
+    summary: 'The action is not allowed for these credentials or in the current context.'
+    cause: 'The authenticated account lacks access to the resource or operation.'
+    remediation: 'Confirm the account has access to the resource and the required permissions.'
+    retryable: 'no'
+  not_found:
+    http_status: 404
+    summary: 'Nothing matches the requested resource.'
+    cause: 'The resource id does not exist or is not visible to this account.'
+    remediation: 'Verify the id and that the resource belongs to the authenticated account.'
+    retryable: 'no'
+  conflict:
+    http_status: 409
+    summary: 'The request was well-formed but conflicts with the current state.'
+    cause: 'The target resource is in a state incompatible with the request (e.g. a signature request is still being set up).'
+    remediation: 'Wait briefly and retry, or listen for a callback event confirming the resource is ready.'
+    retryable: conditional
+  exceeded_rate:
+    http_status: 429
+    summary: 'Your account''s API request rate limit has been exceeded.'
+    cause: 'Too many requests were sent within the rate-limit window for this request type.'
+    remediation: 'Pace requests using the X-RateLimit-* response headers and retry after the window resets.'
+    retryable: 'yes'
+    backoff: 'Honor X-Ratelimit-Reset (Unix epoch); otherwise exponential backoff with jitter. No Retry-After header is sent.'
+  unknown:
+    http_status: 500
+    summary: 'An unexpected error occurred.'
+    cause: 'An unhandled server-side error, or a status code without a more specific error_name.'
+    remediation: 'Retry transient failures; if it persists, contact support with the request details.'
+    retryable: conditional
+    backoff: 'For transient 5xx, retry with exponential backoff; otherwise do not retry.'
+  team_invite_failed:
+    http_status: 403
+    summary: 'The team invitation could not be completed.'
+    cause: 'The invitee already belongs to a team, or the invite is otherwise not permitted.'
+    remediation: 'Confirm the invitee is not already on a team before inviting.'
+    retryable: 'no'
+  max_faxes:
+    http_status: 429
+    summary: 'Too many fax transmissions are currently pending or transmitting.'
+    cause: 'The account has reached the limit of concurrent in-flight fax transmissions.'
+    remediation: 'Wait for outstanding transmissions to complete, then retry.'
+    retryable: 'yes'
+    backoff: 'Retry with exponential backoff once pending transmissions clear.'
+  invalid_recipient:
+    http_status: 400
+    summary: 'The recipient (fax number or email address) is invalid.'
+    cause: 'A recipient value did not pass validation.'
+    remediation: 'Correct the recipient value and resend.'
+    retryable: 'no'
+  signature_request_cancel_failed:
+    http_status: 400
+    summary: 'The signature request could not be cancelled.'
+    cause: 'The caller is not the requester, or the request is already fully executed/closed.'
+    remediation: 'Only the requester can cancel, and only before the request is fully executed.'
+    retryable: 'no'
+  signature_request_remove_failed:
+    http_status: 400
+    summary: 'Access to the signature request could not be removed.'
+    cause: 'The signature request has not yet been fully executed, so access cannot be revoked.'
+    remediation: 'Wait until all parties have signed, or call /signature_request/cancel to cancel incomplete requests instead.'
+    retryable: 'no'
+  maintenance:
+    http_status: 503
+    summary: 'The request could not be completed because the site is under maintenance.'
+    cause: 'The API is in a scheduled maintenance window.'
+    remediation: 'Retry once the maintenance window ends.'
+    retryable: 'yes'
+    backoff: 'Retry later with exponential backoff.'
+  method_not_supported:
+    http_status: 405
+    summary: 'The HTTP method is not supported for this endpoint.'
+    cause: 'The request used a verb the endpoint does not accept.'
+    remediation: 'Use the HTTP method documented for the endpoint.'
+    retryable: 'no'
+  invalid_reminder:
+    http_status: 400
+    summary: 'The signature request reminder was invalid.'
+    cause: 'A reminder was attempted against an ineligible request (e.g. embedded, closed, or expired).'
+    remediation: 'Only send reminders for eligible (non-embedded, open) signature requests.'
+    retryable: 'no'
+  unavailable:
+    http_status: 503
+    summary: 'The service is temporarily unavailable.'
+    cause: 'A downstream dependency or the service itself is temporarily unavailable.'
+    remediation: 'Retry later with exponential backoff.'
+    retryable: 'yes'
+    backoff: 'Retry later with exponential backoff and jitter.'
+  unprocessable_entity:
+    http_status: 422
+    summary: 'The request was understood but the target entity cannot be processed.'
+    cause: 'The resource is still being processed, or it is in an error state.'
+    remediation: 'If the resource is still processing, wait and retry; if it is in an error state, recreate/resend it instead of retrying.'
+    retryable: conditional
+    backoff: 'If still processing, retry with exponential backoff; if in an error state, do not retry.'
+  signature_request_expired:
+    http_status:
+      - 400
+      - 403
+    summary: 'The signature request has expired.'
+    cause: 'The operation targets a request whose expiration has passed. Most endpoints return 400; final-copy/download endpoints return 403.'
+    remediation: 'The request can no longer be acted upon; create a new signature request.'
+    retryable: 'no'
+  deleted:
+    http_status: 410
+    summary: 'The request was cancelled or deleted.'
+    cause: 'The resource has been cancelled or removed and is no longer available.'
+    remediation: 'Do not retry; the resource is permanently gone.'
+    retryable: 'no'
+x-oauth-error-codes:
+  invalid_grant:
+    http_status:
+      - 400
+      - 401
+    summary: 'The OAuth grant (authorization code or refresh token) is invalid or expired.'
+    cause: 'The code/token was already used, expired, or does not match the client.'
+    remediation: 'Re-initiate the OAuth flow to obtain a fresh authorization code.'
+    retryable: 'no'
+  invalid_client:
+    http_status: 400
+    summary: 'The OAuth client credentials are invalid.'
+    cause: 'The client_id or client_secret is unrecognized or incorrect.'
+    remediation: 'Verify the client_id and client_secret from the API app settings.'
+    retryable: 'no'
+  invalid_request:
+    http_status: 400
+    summary: 'The OAuth request is malformed or missing required parameters.'
+    cause: 'A required parameter is missing, or the request format is invalid.'
+    remediation: 'Check the request against the OAuth token endpoint documentation.'
+    retryable: 'no'
+  unauthorized_client:
+    http_status:
+      - 401
+      - 403
+    summary: 'The OAuth client is not authorized to perform this action.'
+    cause: 'The app has not been approved, or the action is outside the granted scopes.'
+    remediation: 'Ensure the app is approved and the required scopes are granted.'
+    retryable: 'no'
+  unsupported_grant_type:
+    http_status: 400
+    summary: 'The grant type is not supported.'
+    cause: 'The grant_type parameter value is not recognized.'
+    remediation: 'Use authorization_code or refresh_token as the grant_type.'
+    retryable: 'no'
+  payment_required:
+    http_status: 402
+    summary: 'The account requires a paid plan to use this OAuth app.'
+    cause: 'The authorizing account does not have a plan that supports this integration.'
+    remediation: 'Upgrade the account to a plan that includes OAuth app access.'
+    retryable: 'no'
+  addon_required:
+    http_status: 402
+    summary: 'An add-on is required to use this OAuth app.'
+    cause: 'The account plan does not include the add-on needed for this integration.'
+    remediation: 'Add the required add-on to the account subscription.'
+    retryable: 'no'
+  invalid_scope:
+    http_status: 400
+    summary: 'The requested OAuth scope is invalid.'
+    cause: 'The scope parameter contains values not permitted for the app.'
+    remediation: 'Request only scopes that the app is configured to use.'
+    retryable: 'no'
+  quota_reached:
+    http_status: 402
+    summary: 'The account has reached its usage quota for this OAuth app.'
+    cause: 'The authorizing account has exhausted its quota for the integration.'
+    remediation: 'Contact the app owner or upgrade the account quota.'
+    retryable: 'no'
+  server_error:
+    http_status: 500
+    summary: 'An internal server error occurred during OAuth processing.'
+    cause: 'An unexpected error on the server side while handling the OAuth request.'
+    remediation: 'Retry the request; if it persists, contact support.'
+    retryable: 'yes'
+    backoff: 'Retry with exponential backoff.'
+  temporary_unavailable:
+    http_status: 503
+    summary: 'The OAuth service is temporarily unavailable.'
+    cause: 'The service is under maintenance or experiencing temporary issues.'
+    remediation: 'Retry after a short delay.'
+    retryable: 'yes'
+    backoff: 'Retry with exponential backoff.'
+x-error-events:
+  signature_request_invalid:
+    event_type: signature_request_invalid
+    delivery: webhook
+    summary: 'Asynchronous error while processing a signature request.'
+    cause: 'A signature request could not be processed (e.g. invalid tags, fields, or merge data).'
+    remediation: 'Inspect event.event_metadata.event_message in the callback, correct the request, and resend.'
+    retryable: conditional
+  unknown_error:
+    event_type: unknown_error
+    delivery: webhook
+    summary: 'An unspecified asynchronous processing error occurred.'
+    cause: 'An unexpected error occurred while processing the request asynchronously.'
+    remediation: 'Check the request status in the API dashboard; retry or contact support if it persists.'
+    retryable: conditional
+  file_error:
+    event_type: file_error
+    delivery: webhook
+    summary: 'Asynchronous error while processing an uploaded file.'
+    cause: 'A file attached to a request could not be processed.'
+    remediation: 'Resend the request with a supported, non-corrupt file.'
+    retryable: conditional
+  template_error:
+    event_type: template_error
+    delivery: webhook
+    summary: 'Asynchronous error while creating a template.'
+    cause: 'Template file processing failed (e.g. unsupported or corrupt file).'
+    remediation: 'Recreate the template with a valid file; check status in the API dashboard.'
+    retryable: conditional
+  sign_url_invalid:
+    event_type: sign_url_invalid
+    delivery: webhook
+    summary: 'An embedded signing URL has expired or become invalid.'
+    cause: 'The embedded sign_url is no longer valid (e.g. expired).'
+    remediation: 'Generate a fresh embedded sign_url via the embedded sign URL endpoint.'
+    retryable: 'yes'
