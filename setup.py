@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Dropbox Sign API
 
@@ -23,13 +21,12 @@ from pathlib import Path
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 NAME = "dropbox-sign"
-VERSION = "1.14.1"
-PYTHON_REQUIRES = ">= 3.8"
+VERSION = "2.0.0"
+PYTHON_REQUIRES = ">= 3.10"
 REQUIRES = [
-    "urllib3 >= 2.8.0, < 3.0.0; python_version >= '3.10'",
-    "urllib3 >= 1.25.3, < 3.0.0; python_version < '3.10'",
+    "urllib3 >= 2.8.0, < 3.0.0",
     "python-dateutil >= 2.8.2",
-    "pydantic >= 2",
+    "pydantic >= 2.11",
     "typing-extensions >= 4.7.1",
 ]
 
